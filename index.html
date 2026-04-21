@@ -3416,9 +3416,10 @@ function openCamEmbed(idx) {
   if (cam.ytId) {
     sourceEl.textContent = '📺 YouTube Live (EarthCam official stream)';
     player.innerHTML =
-      '<iframe src="https://www.youtube.com/embed/' + cam.ytId +
+      '<iframe src="https://www.youtube-nocookie.com/embed/' + cam.ytId +
       '?autoplay=1&mute=0&rel=0&modestbranding=1&playsinline=1" ' +
-      'allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>';
+      'allow="autoplay; fullscreen; picture-in-picture" allowfullscreen ' +
+      'sandbox="allow-autoplay allow-fullscreen allow-picture-in-picture allow-same-origin allow-scripts"></iframe>';
   } else {
     sourceEl.textContent = '📡 NYC DOT Live Camera — refreshes every 10 s';
     player.innerHTML = '<div style="display:flex;align-items:center;justify-content:center;height:100%;color:#ccc;font-size:.85rem;gap:.6rem"><span style="animation:spin 1s linear infinite;display:inline-block">⏳</span> Finding nearest NYC DOT camera…</div>';
