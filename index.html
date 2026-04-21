@@ -1420,6 +1420,84 @@ html.dark .bottom-nav {
   /* push panel content above both radio bar + bottom nav */
   .panel { padding-bottom: 200px !important; }
 }
+
+/* ── CAMERA LIVE EMBED OVERLAY ── */
+.cam-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 99999;
+  background: rgba(0,0,0,.93);
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  gap: .75rem;
+  animation: fadeIn .18s ease;
+}
+.cam-overlay.open { display: flex; }
+.cam-overlay-header {
+  width: 100%;
+  max-width: 820px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: .5rem;
+}
+.cam-overlay-title {
+  color: #fff;
+  font-weight: 700;
+  font-size: 1rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.cam-overlay-close {
+  background: rgba(255,255,255,.12);
+  border: 1px solid rgba(255,255,255,.2);
+  color: #fff;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  font-size: 1rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: background .15s;
+}
+.cam-overlay-close:hover { background: rgba(255,255,255,.22); }
+.cam-overlay-player {
+  width: 100%;
+  max-width: 820px;
+  aspect-ratio: 16/9;
+  background: #000;
+  border-radius: 12px;
+  overflow: hidden;
+  position: relative;
+  box-shadow: 0 8px 40px rgba(0,0,0,.7);
+}
+.cam-overlay-player iframe,
+.cam-overlay-player img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border: none;
+  display: block;
+}
+.cam-overlay-footer {
+  color: rgba(255,255,255,.45);
+  font-size: .72rem;
+  text-align: center;
+}
+.cam-overlay-ext {
+  color: #ffd84f;
+  text-decoration: none;
+  font-weight: 600;
+}
+.cam-overlay-ext:hover { text-decoration: underline; }
+
 .bn-item {
   flex: 1;
   display: flex;
@@ -2529,6 +2607,23 @@ html.dark .onboarding-sheet { background: #1a1c26; }
 </div>
 
 <!-- ═══════════════════════════════
+     CAMERA LIVE EMBED OVERLAY
+═══════════════════════════════ -->
+<div class="cam-overlay" id="cam-overlay" onclick="handleCamOverlayClick(event)">
+  <div class="cam-overlay-header">
+    <span class="cam-overlay-title" id="cam-overlay-title"></span>
+    <button class="cam-overlay-close" onclick="closeCamEmbed()" aria-label="Close">✕</button>
+  </div>
+  <div class="cam-overlay-player" id="cam-overlay-player">
+    <div style="display:flex;align-items:center;justify-content:center;height:100%;color:#fff;font-size:.85rem">Loading…</div>
+  </div>
+  <div class="cam-overlay-footer">
+    <span id="cam-overlay-source"></span> &nbsp;·&nbsp;
+    <a class="cam-overlay-ext" id="cam-overlay-ext" href="#" target="_blank" rel="noopener">Watch on full site ↗</a>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════
      ONBOARDING (first visit)
 ═══════════════════════════════ -->
 <div class="onboarding-overlay" id="onboarding-overlay">
@@ -3172,23 +3267,23 @@ window.addEventListener('hashchange', function() {
 ───────────────────────────────── */
 const EARTHCAMS = [
   // ── Midtown ──
-  { name:'Times Square',          loc:'Broadway & 7th Ave, Midtown',      area:'midtown',   tags:['landmarks'], icon:'🌟', grad:'135deg,#1a0a2e,#3d1c6e',  url:'https://www.earthcam.com/usa/newyork/timessquare/' },
-  { name:'Times Square Crossroads',loc:'Street-Level, 42nd St',           area:'midtown',   tags:['landmarks'], icon:'🎭', grad:'135deg,#1c1000,#5c3a00',  url:'https://www.earthcam.com/usa/newyork/timessquare/?cam=tsrobo3' },
-  { name:'Midtown Skyline 4K',    loc:'Hudson Yards & Chrysler Bldg',     area:'midtown',   tags:['landmarks'], icon:'🏙️', grad:'135deg,#001428,#003060',  url:'https://www.earthcam.com/usa/newyork/midtown/skyline/' },
-  { name:'Herald Square',         loc:"34th St & 6th Ave, Macy's",       area:'midtown',   tags:[],            icon:'🛍️', grad:'135deg,#0a1a0a,#1a4020',  url:'https://www.earthcam.com/usa/newyork/heraldsquare/' },
-  { name:'Columbus Circle',       loc:'Central Park South & 8th Ave',     area:'midtown',   tags:['landmarks'], icon:'🌳', grad:'135deg,#001a0a,#004030',  url:'https://www.earthcam.com/usa/newyork/columbuscircle/' },
-  { name:'High Line',             loc:'Meatpacking District, West Side',  area:'midtown',   tags:[],            icon:'🌿', grad:'135deg,#071a07,#0f380f',  url:'https://www.earthcam.com/usa/newyork/highline/' },
-  { name:'New York Harbor',       loc:'Governors Island & Statue of Liberty', area:'downtown', tags:['landmarks'], icon:'⚓', grad:'135deg,#00101e,#002440',  url:'https://www.earthcam.com/usa/newyork/newyorkharbor/' },
+  { name:'Times Square',          loc:'Broadway & 7th Ave, Midtown',      area:'midtown',   tags:['landmarks'], icon:'🌟', grad:'135deg,#1a0a2e,#3d1c6e',  url:'https://www.earthcam.com/usa/newyork/timessquare/',            ytId:'VjSIXFwB_WQ', lat:40.7580, lng:-73.9855 },
+  { name:'Times Square Crossroads',loc:'Street-Level, 42nd St',           area:'midtown',   tags:['landmarks'], icon:'🎭', grad:'135deg,#1c1000,#5c3a00',  url:'https://www.earthcam.com/usa/newyork/timessquare/?cam=tsrobo3', ytId:'PGrq-2mju2s', lat:40.7571, lng:-73.9861 },
+  { name:'Midtown Skyline 4K',    loc:'Hudson Yards & Chrysler Bldg',     area:'midtown',   tags:['landmarks'], icon:'🏙️', grad:'135deg,#001428,#003060',  url:'https://www.earthcam.com/usa/newyork/midtown/skyline/',         ytId:'VGnFLdQW39A', lat:40.7549, lng:-74.0020 },
+  { name:'Herald Square',         loc:"34th St & 6th Ave, Macy's",       area:'midtown',   tags:[],            icon:'🛍️', grad:'135deg,#0a1a0a,#1a4020',  url:'https://www.earthcam.com/usa/newyork/heraldsquare/',                              lat:40.7503, lng:-73.9877 },
+  { name:'Columbus Circle',       loc:'Central Park South & 8th Ave',     area:'midtown',   tags:['landmarks'], icon:'🌳', grad:'135deg,#001a0a,#004030',  url:'https://www.earthcam.com/usa/newyork/columbuscircle/',                           lat:40.7681, lng:-73.9819 },
+  { name:'High Line',             loc:'Meatpacking District, West Side',  area:'midtown',   tags:[],            icon:'🌿', grad:'135deg,#071a07,#0f380f',  url:'https://www.earthcam.com/usa/newyork/highline/',                                 lat:40.7480, lng:-74.0048 },
+  { name:'New York Harbor',       loc:'Governors Island & Statue of Liberty', area:'downtown', tags:['landmarks'], icon:'⚓', grad:'135deg,#00101e,#002440',  url:'https://www.earthcam.com/usa/newyork/newyorkharbor/',                        lat:40.6936, lng:-74.0162 },
   // ── Downtown ──
-  { name:'Brooklyn Bridge',       loc:'Downtown Manhattan & DUMBO',       area:'downtown',  tags:['landmarks'], icon:'🌉', grad:'135deg,#100010,#2a004a',  url:'https://www.earthcam.com/usa/newyork/brooklynbridge/' },
-  { name:'Mulberry St / Little Italy',loc:'Little Italy, Downtown Manhattan',area:'downtown',tags:[],           icon:'🍕', grad:'135deg,#1a0005,#400010',  url:'https://www.earthcam.com/usa/newyork/littleitaly/' },
+  { name:'Brooklyn Bridge',       loc:'Downtown Manhattan & DUMBO',       area:'downtown',  tags:['landmarks'], icon:'🌉', grad:'135deg,#100010,#2a004a',  url:'https://www.earthcam.com/usa/newyork/brooklynbridge/',          ytId:'pEuK-UAtT3s', lat:40.7061, lng:-73.9969 },
+  { name:'Mulberry St / Little Italy',loc:'Little Italy, Downtown Manhattan',area:'downtown',tags:[],           icon:'🍕', grad:'135deg,#1a0005,#400010',  url:'https://www.earthcam.com/usa/newyork/littleitaly/',                              lat:40.7193, lng:-73.9971 },
   // ── Brooklyn ──
-  { name:'Coney Island',          loc:'Luna Park & Boardwalk, Brooklyn',  area:'brooklyn',  tags:['landmarks'], icon:'🎡', grad:'135deg,#001220,#002848',  url:'https://www.earthcam.com/usa/newyork/coneyisland/' },
+  { name:'Coney Island',          loc:'Luna Park & Boardwalk, Brooklyn',  area:'brooklyn',  tags:['landmarks'], icon:'🎡', grad:'135deg,#001220,#002848',  url:'https://www.earthcam.com/usa/newyork/coneyisland/',                              lat:40.5752, lng:-73.9815 },
   // ── Landmarks ──
-  { name:'Statue of Liberty',     loc:'Liberty Island, New York Harbor',  area:'downtown',  tags:['landmarks'], icon:'🗽', grad:'135deg,#001428,#002a50',  url:'https://www.statueofliberty.org/statue-of-liberty/earthcam/' },
-  { name:'SUMMIT One Vanderbilt', loc:'Midtown Skyline from 1,401 ft',    area:'midtown',   tags:['landmarks'], icon:'🔭', grad:'135deg,#000510,#001028',  url:'https://summitov.com/live/' },
-  { name:'Rockefeller Center',    loc:'Top of the Rock, 5th Ave',         area:'midtown',   tags:['landmarks'], icon:'🏔️', grad:'135deg,#0a0800,#1e1800',  url:'https://www.earthcam.com/usa/newyork/rockefellercenter/' },
-  { name:'Empire State Bldg',     loc:'Midtown Manhattan Skyline',        area:'midtown',   tags:['landmarks'], icon:'🌃', grad:'135deg,#050010,#100030',  url:'https://www.esbnyc.com/about/live-cam' },
+  { name:'Statue of Liberty',     loc:'Liberty Island, New York Harbor',  area:'downtown',  tags:['landmarks'], icon:'🗽', grad:'135deg,#001428,#002a50',  url:'https://www.statueofliberty.org/statue-of-liberty/earthcam/',  ytId:'Qk8pA1UWNNo', lat:40.6892, lng:-74.0445 },
+  { name:'SUMMIT One Vanderbilt', loc:'Midtown Skyline from 1,401 ft',    area:'midtown',   tags:['landmarks'], icon:'🔭', grad:'135deg,#000510,#001028',  url:'https://summitov.com/live/',                                                     lat:40.7527, lng:-73.9784 },
+  { name:'Rockefeller Center',    loc:'Top of the Rock, 5th Ave',         area:'midtown',   tags:['landmarks'], icon:'🏔️', grad:'135deg,#0a0800,#1e1800',  url:'https://www.earthcam.com/usa/newyork/rockefellercenter/',                        lat:40.7587, lng:-73.9787 },
+  { name:'Empire State Bldg',     loc:'Midtown Manhattan Skyline',        area:'midtown',   tags:['landmarks'], icon:'🌃', grad:'135deg,#050010,#100030',  url:'https://www.esbnyc.com/about/live-cam',                                          lat:40.7484, lng:-73.9857 },
 ];
 
 let activeCamFilter = 'all';
@@ -3225,15 +3320,17 @@ function getCamStockPhoto(cam) {
 
 function buildEarthcamGrid() {
   const grid = document.getElementById('cams-grid');
-  EARTHCAMS.forEach(cam => {
-    const card = document.createElement('a');
+  EARTHCAMS.forEach((cam, idx) => {
+    const card = document.createElement('div');
     card.className = 'ec-card';
-    card.href = cam.url;
-    card.target = '_blank';
-    card.rel = 'noopener';
+    card.style.cursor = 'pointer';
     card.dataset.area = cam.area;
     card.dataset.tags = cam.tags.join(',');
     card.dataset.name = cam.name.toLowerCase() + ' ' + cam.loc.toLowerCase();
+    card.setAttribute('role', 'button');
+    card.setAttribute('tabindex', '0');
+    card.onclick = () => openCamEmbed(idx);
+    card.onkeydown = (e) => { if (e.key === 'Enter' || e.key === ' ') openCamEmbed(idx); };
 
     // Tag badge
     const isLandmark = cam.tags.includes('landmarks');
@@ -3242,6 +3339,7 @@ function buildEarthcamGrid() {
       : 'background:rgba(61,232,192,.08);color:var(--teal);border:1px solid rgba(61,232,192,.2)';
     const tagLabel = isLandmark ? '⭐ Landmark' : '📍 ' + cam.area.charAt(0).toUpperCase()+cam.area.slice(1);
     const stockPhoto = getCamStockPhoto(cam);
+    const playLabel = cam.ytId ? '▶ Watch Live — YouTube' : '▶ Watch Live — NYC DOT Cam';
 
     card.innerHTML =
       '<div class="ec-thumb">' +
@@ -3249,7 +3347,7 @@ function buildEarthcamGrid() {
         '<div class="ec-vignette"></div>' +
         '<div class="ec-play">' +
           '<div class="ec-play-btn"><svg width="20" height="20" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>' +
-          '<div class="ec-play-lbl">Watch Live on EarthCam ↗</div>' +
+          '<div class="ec-play-lbl">' + playLabel + '</div>' +
         '</div>' +
         '<div class="ec-bar">' +
           '<div class="ec-live"><div class="ec-live-dot"></div>LIVE</div>' +
@@ -3259,7 +3357,7 @@ function buildEarthcamGrid() {
       '</div>' +
       '<div class="ec-foot">' +
         '<span class="ec-tag" style="' + tagStyle + '">' + tagLabel + '</span>' +
-        '<span class="ec-open">↗ EarthCam Live</span>' +
+        '<span class="ec-open">' + (cam.ytId ? '▶ Watch Live' : '📡 Live Feed') + '</span>' +
       '</div>';
 
     grid.appendChild(card);
@@ -3293,6 +3391,93 @@ function setCamFilter(filter, btn) {
 }
 
 buildEarthcamGrid();
+
+/* ── CAMERA LIVE EMBED ── */
+let _camRefreshTimer = null;
+let _dotCamCache = null;
+
+function openCamEmbed(idx) {
+  const cam = EARTHCAMS[idx];
+  const overlay  = document.getElementById('cam-overlay');
+  const player   = document.getElementById('cam-overlay-player');
+  const titleEl  = document.getElementById('cam-overlay-title');
+  const sourceEl = document.getElementById('cam-overlay-source');
+  const extEl    = document.getElementById('cam-overlay-ext');
+
+  // Tear down any previous session
+  player.innerHTML = '';
+  if (_camRefreshTimer) { clearInterval(_camRefreshTimer); _camRefreshTimer = null; }
+
+  titleEl.textContent = cam.icon + '  ' + cam.name + ' — ' + cam.loc;
+  extEl.href = cam.url;
+  overlay.classList.add('open');
+  document.body.style.overflow = 'hidden';
+
+  if (cam.ytId) {
+    sourceEl.textContent = '📺 YouTube Live (EarthCam official stream)';
+    player.innerHTML =
+      '<iframe src="https://www.youtube.com/embed/' + cam.ytId +
+      '?autoplay=1&mute=0&rel=0&modestbranding=1&playsinline=1" ' +
+      'allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>';
+  } else {
+    sourceEl.textContent = '📡 NYC DOT Live Camera — refreshes every 10 s';
+    player.innerHTML = '<div style="display:flex;align-items:center;justify-content:center;height:100%;color:#ccc;font-size:.85rem;gap:.6rem"><span style="animation:spin 1s linear infinite;display:inline-block">⏳</span> Finding nearest NYC DOT camera…</div>';
+    _loadDotCam(cam, player);
+  }
+}
+
+async function _loadDotCam(cam, player) {
+  try {
+    if (!_dotCamCache) {
+      const res = await fetch('/api/cameras');
+      if (!res.ok) throw new Error('api_' + res.status);
+      _dotCamCache = await res.json();
+    }
+    const list = Array.isArray(_dotCamCache)
+      ? _dotCamCache
+      : (_dotCamCache.cameras || _dotCamCache.data || []);
+    const online = list.filter(c => c.isOnline !== false);
+    let nearest = null, minDist = Infinity;
+    for (const c of online) {
+      const lat = c.latitude || c.lat;
+      const lng = c.longitude || c.lng || c.lon;
+      if (!lat || !lng) continue;
+      const d = (lat - cam.lat) ** 2 + (lng - cam.lng) ** 2;
+      if (d < minDist) { minDist = d; nearest = c; }
+    }
+    if (!nearest) throw new Error('no_camera_nearby');
+    const imgUrl = nearest.imageUrl ||
+      ('https://webcams.nyctmc.org/api/cameras/' + nearest.id + '/image');
+    const img = document.createElement('img');
+    img.alt = cam.name + ' live camera';
+    img.style.cssText = 'width:100%;height:100%;object-fit:cover;display:block';
+    img.onerror = () => { img.src = imgUrl + '?t=' + Date.now(); };
+    img.src = imgUrl + '?t=' + Date.now();
+    player.innerHTML = '';
+    player.appendChild(img);
+    _camRefreshTimer = setInterval(() => { img.src = imgUrl + '?t=' + Date.now(); }, 10000);
+  } catch (e) {
+    player.innerHTML =
+      '<div style="display:flex;flex-direction:column;align-items:center;justify-content:center;height:100%;color:#fff;gap:1rem;padding:1.5rem;text-align:center">' +
+        '<div style="font-size:3rem">' + EARTHCAMS.find(c=>c.name===player.closest?.()??' ').icon + '</div>' +
+        '<div style="font-weight:700;font-size:1rem">Live stream unavailable here</div>' +
+        '<div style="font-size:.8rem;opacity:.55">NYC DOT doesn\'t have a camera at this exact spot.</div>' +
+        '<a href="' + (EARTHCAMS.find((c,i)=>i===Number(document.getElementById('cam-overlay-title').dataset.idx)||false)||{url:'#'}).url + '" ' +
+        'target="_blank" style="background:#ffd84f;color:#002a86;padding:.65rem 1.6rem;border-radius:999px;font-weight:700;text-decoration:none;font-size:.9rem">Watch on EarthCam ↗</a>' +
+      '</div>';
+  }
+}
+
+function closeCamEmbed() {
+  document.getElementById('cam-overlay').classList.remove('open');
+  document.getElementById('cam-overlay-player').innerHTML = '';
+  document.body.style.overflow = '';
+  if (_camRefreshTimer) { clearInterval(_camRefreshTimer); _camRefreshTimer = null; }
+}
+
+function handleCamOverlayClick(e) {
+  if (e.target === document.getElementById('cam-overlay')) closeCamEmbed();
+}
 
 /* ── TRAFFIC MAP SWITCHER ── */
 const MAPS={
@@ -4950,6 +5135,14 @@ function loadTodayPanel() {
   setTimeout(function(){ syncTodayWeather(); syncTodaySubway(); syncTodayNews(); }, 4000);
   setTimeout(function(){ syncTodayWeather(); syncTodaySubway(); syncTodayNews(); }, 10000);
 }
+
+/* Close cam overlay on Escape key */
+document.addEventListener('keydown', function(e){
+  if (e.key === 'Escape') {
+    if (document.getElementById('cam-overlay').classList.contains('open')) closeCamEmbed();
+    else closeMoreDrawer();
+  }
+});
 
 /* ── SWIPE NAVIGATION ── */
 (function(){
