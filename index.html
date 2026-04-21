@@ -1410,9 +1410,15 @@ html.dark .bottom-nav {
 }
 @media (max-width: 768px) {
   .bottom-nav { display: flex; }
-  /* push panel content above bottom nav + radio bar */
-  .panel { padding-bottom: 150px !important; }
-  #radio-bar { display: none; }
+  /* radio bar sits just above the bottom nav */
+  #radio-bar {
+    bottom: 62px;
+    border-top: 1px solid rgba(255,255,255,.25);
+    border-bottom: none;
+    z-index: 10000;
+  }
+  /* push panel content above both radio bar + bottom nav */
+  .panel { padding-bottom: 200px !important; }
 }
 .bn-item {
   flex: 1;
