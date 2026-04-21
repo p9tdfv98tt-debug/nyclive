@@ -1,0 +1,20 @@
+{
+  "name": "NYC LIVE",
+  "short_name": "NYC Live",
+  "description": "Real-time New York City dashboard — live cameras, traffic, subway status, weather, sports and more.",
+  "start_url": "/",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#002a86",
+  "theme_color": "#0039a6",
+  "icons": [
+    {
+      "src": "/assets/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": ["news", "travel", "utilities"],
+  "lang": "en"
+}
