@@ -1372,6 +1372,470 @@ html.dark .dark-btn:hover { background: rgba(255,255,255,.18); }
 @media(max-width:1080px) {
   .sports-board-grid { grid-template-columns: repeat(2, minmax(0,1fr)); }
 }
+
+/* ════════════════════════════════════════════
+   REDESIGN V2 — mobile-first modernisation
+════════════════════════════════════════════ */
+
+/* ── PANEL TRANSITIONS ── */
+@keyframes panelSlideIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: none; }
+}
+.panel.active { animation: panelSlideIn .22s ease; }
+
+/* ── TOP NAV: hide on mobile, show on desktop ── */
+@media (max-width: 768px) {
+  nav.top-nav { display: none !important; }
+}
+
+/* ── BOTTOM NAV ── */
+.bottom-nav {
+  display: none;
+  position: fixed;
+  top: auto !important;
+  bottom: 0; left: 0; right: 0;
+  z-index: 10001;
+  background: linear-gradient(180deg, #003eb0 0%, #00349b 100%);
+  border-top: 2px solid #ffd84f;
+  height: 62px;
+  padding: 0 .25rem;
+  padding-bottom: env(safe-area-inset-bottom, 0);
+  box-shadow: 0 -2px 16px rgba(0,0,0,.28);
+}
+html.dark .bottom-nav {
+  background: linear-gradient(180deg, rgba(20,22,30,.98), rgba(12,14,20,.98));
+  border-top: 1px solid rgba(255,255,255,.18);
+  box-shadow: 0 -4px 22px rgba(0,0,0,.65);
+}
+@media (max-width: 768px) {
+  .bottom-nav { display: flex; }
+  /* push panel content above bottom nav + radio bar */
+  .panel { padding-bottom: 150px !important; }
+  #radio-bar { display: none; }
+}
+.bn-item {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 8px 2px 6px;
+  border-radius: 12px;
+  transition: background .15s;
+  position: relative;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
+.bn-item:active { background: rgba(255,255,255,.12); }
+.bn-icon { font-size: 1.35rem; line-height: 1; }
+.bn-label {
+  font-size: .59rem;
+  font-weight: 700;
+  letter-spacing: .04em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,.55);
+  font-family: inherit;
+  white-space: nowrap;
+}
+.bn-item.active .bn-icon { transform: scale(1.15); }
+.bn-item.active .bn-label { color: #ffd84f; }
+.bn-item.active::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 22%; right: 22%;
+  height: 3px;
+  background: #ffd84f;
+  border-radius: 3px 3px 0 0;
+}
+html.dark .bn-item.active .bn-label { color: #ff6b6b; }
+html.dark .bn-item.active::after { background: #ff6b6b; }
+
+/* ── MORE DRAWER ── */
+.more-drawer-backdrop {
+  display: none;
+  position: fixed; inset: 0;
+  background: rgba(0,0,0,.55);
+  z-index: 10002;
+  backdrop-filter: blur(5px);
+}
+.more-drawer-sheet {
+  position: fixed;
+  bottom: -100%;
+  left: 0; right: 0;
+  z-index: 10003;
+  background: var(--surface2);
+  border-radius: 24px 24px 0 0;
+  padding: 12px 1rem 90px;
+  transition: bottom .32s cubic-bezier(.32,.72,0,1);
+  max-height: 82vh;
+  overflow-y: auto;
+  box-shadow: 0 -8px 36px rgba(0,0,0,.3);
+}
+html.dark .more-drawer-sheet {
+  background: #1a1c26;
+  box-shadow: 0 -8px 36px rgba(0,0,0,.65);
+}
+.more-drawer-title {
+  font-size: .72rem;
+  font-weight: 800;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--muted);
+  text-align: center;
+  margin-bottom: 1rem;
+}
+.more-drawer-handle {
+  width: 38px; height: 4px;
+  background: var(--border2);
+  border-radius: 2px;
+  margin: 0 auto 10px;
+}
+.more-drawer-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: .6rem;
+}
+.more-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: .4rem;
+  padding: .9rem .4rem;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  cursor: pointer;
+  text-align: center;
+  transition: background .12s, transform .1s;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+  font-family: inherit;
+}
+.more-item:active { transform: scale(.94); }
+.more-icon { font-size: 1.55rem; }
+.more-label {
+  font-size: .64rem;
+  font-weight: 700;
+  letter-spacing: .02em;
+  color: var(--text2);
+  line-height: 1.25;
+}
+.more-drawer-open .more-drawer-backdrop { display: block; }
+.more-drawer-open .more-drawer-sheet { bottom: 0; }
+
+/* ── TODAY PANEL ── */
+.today-hero {
+  background: linear-gradient(135deg, #0039a6 0%, #0055d4 100%);
+  border-radius: var(--radius);
+  padding: 1.4rem 1.3rem 1.3rem;
+  color: #fff;
+  margin-bottom: 1rem;
+  position: relative;
+  overflow: hidden;
+  box-shadow: var(--shadow-md);
+}
+html.dark .today-hero {
+  background: linear-gradient(135deg, rgba(180,40,40,.35) 0%, rgba(16,18,28,1) 65%);
+  border: 1px solid rgba(255,255,255,.12);
+}
+.today-hero::before {
+  content: '';
+  position: absolute;
+  right: -40px; top: -40px;
+  width: 200px; height: 200px;
+  border-radius: 50%;
+  background: rgba(255,255,255,.07);
+  pointer-events: none;
+}
+.today-hero::after {
+  content: '';
+  position: absolute;
+  right: 60px; bottom: -60px;
+  width: 140px; height: 140px;
+  border-radius: 50%;
+  background: rgba(255,255,255,.04);
+  pointer-events: none;
+}
+.today-greeting {
+  font-size: .7rem;
+  font-weight: 800;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  opacity: .8;
+  margin-bottom: .3rem;
+  position: relative; z-index: 1;
+}
+.today-date-line {
+  font-size: .95rem;
+  font-weight: 600;
+  opacity: .9;
+  margin-bottom: 1rem;
+  position: relative; z-index: 1;
+}
+.today-wx-row {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  position: relative; z-index: 1;
+}
+.today-wx-icon { font-size: 3rem; line-height: 1; }
+.today-wx-temp {
+  font-size: 3rem;
+  font-weight: 800;
+  letter-spacing: -.04em;
+  line-height: 1;
+}
+.today-wx-desc { font-size: .9rem; font-weight: 600; margin-top: .25rem; opacity: .9; }
+.today-wx-feel { font-size: .76rem; margin-top: .1rem; opacity: .75; }
+
+.today-cards {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: .7rem;
+  margin-bottom: 1.1rem;
+}
+@media (max-width: 480px) { .today-cards { grid-template-columns: 1fr; } }
+.today-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--border2);
+  border-radius: var(--radius);
+  padding: .95rem 1rem;
+  box-shadow: var(--shadow-sm);
+  transition: box-shadow .2s, transform .15s;
+}
+.today-card:hover { box-shadow: var(--shadow-md); transform: translateY(-2px); }
+.today-card-icon { font-size: 1.4rem; margin-bottom: .4rem; }
+.today-card-title {
+  font-size: .62rem;
+  font-weight: 800;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: .3rem;
+}
+.today-card-value {
+  font-size: .95rem;
+  font-weight: 700;
+  color: var(--text);
+  line-height: 1.3;
+}
+.today-card-sub {
+  font-size: .72rem;
+  color: var(--text2);
+  margin-top: .2rem;
+  line-height: 1.4;
+}
+.today-card-ok  { border-left-color: #11773a; }
+.today-card-warn { border-left-color: #c45800; }
+.today-card-info { border-left-color: var(--accent); }
+html.dark .today-card-ok   { border-left-color: #6dd68a; }
+html.dark .today-card-warn { border-left-color: #ffb347; }
+
+.today-news-section { margin-bottom: 1rem; }
+.today-news-item {
+  display: flex;
+  align-items: flex-start;
+  gap: .7rem;
+  padding: .8rem .9rem;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  margin-bottom: .5rem;
+  text-decoration: none;
+  color: inherit;
+  transition: background .12s;
+}
+.today-news-item:hover { background: var(--surface2); }
+.today-news-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--accent); flex-shrink: 0; margin-top: 5px; }
+.today-news-tag { font-size: .6rem; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; color: var(--accent); margin-bottom: .15rem; }
+.today-news-text { font-size: .84rem; font-weight: 500; color: var(--text); line-height: 1.45; }
+
+.today-quick-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: .5rem;
+  margin-bottom: 1rem;
+}
+.today-quick-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: .35rem;
+  padding: .8rem .4rem;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  text-decoration: none;
+  transition: background .12s, transform .1s;
+  -webkit-tap-highlight-color: transparent;
+}
+.today-quick-btn:active { transform: scale(.96); }
+.today-quick-icon { font-size: 1.4rem; }
+.today-quick-label {
+  font-size: .62rem;
+  font-weight: 700;
+  color: var(--text2);
+  text-align: center;
+  letter-spacing: .01em;
+  line-height: 1.2;
+}
+
+/* ── BOROUGH SELECTOR ── */
+.borough-row {
+  background: var(--surface2);
+  border-bottom: 1px solid var(--border);
+  padding: .42rem 2rem;
+  overflow-x: auto;
+  scrollbar-width: none;
+  display: flex;
+  align-items: center;
+  gap: .45rem;
+  flex-wrap: nowrap;
+}
+.borough-row::-webkit-scrollbar { display: none; }
+html.dark .borough-row {
+  background: rgba(14,16,22,.88);
+  border-bottom: 1px solid rgba(255,255,255,.1);
+}
+.borough-lbl {
+  font-size: .6rem;
+  font-weight: 800;
+  color: var(--muted);
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  flex-shrink: 0;
+  white-space: nowrap;
+}
+.bor-btn {
+  border: 1px solid var(--border2);
+  background: transparent;
+  color: var(--text2);
+  font-size: .72rem;
+  font-weight: 700;
+  padding: 5px 13px;
+  border-radius: var(--radius-pill);
+  cursor: pointer;
+  font-family: inherit;
+  white-space: nowrap;
+  transition: all .15s;
+  flex-shrink: 0;
+  -webkit-tap-highlight-color: transparent;
+}
+.bor-btn:hover { background: var(--surface); }
+.bor-btn.active { background: var(--accent); color: #fff; border-color: var(--accent); }
+html.dark .bor-btn.active { background: #ff4a4a; border-color: #ff4a4a; }
+@media (max-width: 640px) {
+  .borough-row { padding: .38rem .7rem; }
+  .borough-lbl { display: none; }
+}
+
+/* ── PULL-TO-REFRESH ── */
+.ptr-bar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: .5rem;
+  height: 0;
+  overflow: hidden;
+  font-size: .78rem;
+  color: var(--muted);
+  transition: height .2s;
+  font-weight: 500;
+}
+.ptr-bar.ptr-visible { height: 44px; }
+.ptr-spin { width: 18px; height: 18px; border: 2px solid var(--border2); border-top-color: var(--accent); border-radius: 50%; animation: spin .7s linear infinite; }
+
+/* ── ONBOARDING ── */
+.onboarding-overlay {
+  display: none;
+  position: fixed; inset: 0;
+  z-index: 20000;
+  background: rgba(0,0,0,.72);
+  backdrop-filter: blur(8px);
+  align-items: flex-end;
+  justify-content: center;
+}
+.onboarding-overlay.ob-show { display: flex; }
+.onboarding-sheet {
+  background: var(--surface2);
+  border-radius: 28px 28px 0 0;
+  padding: 1.6rem 1.5rem 2.5rem;
+  width: 100%;
+  max-width: 540px;
+  box-shadow: 0 -16px 52px rgba(0,0,0,.4);
+  animation: panelSlideIn .35s ease;
+}
+html.dark .onboarding-sheet { background: #1a1c26; }
+.ob-slide { display: none; }
+.ob-slide.ob-active { display: block; }
+.ob-emoji { font-size: 3rem; margin-bottom: .75rem; }
+.ob-title {
+  font-size: 1.5rem;
+  font-weight: 800;
+  font-family: 'Archivo Black', sans-serif;
+  color: var(--text);
+  margin-bottom: .5rem;
+  line-height: 1.2;
+}
+.ob-body {
+  font-size: .88rem;
+  color: var(--text2);
+  line-height: 1.65;
+  margin-bottom: 1.3rem;
+}
+.ob-dots {
+  display: flex;
+  gap: .4rem;
+  justify-content: center;
+  margin-bottom: 1.1rem;
+}
+.ob-dot {
+  width: 7px; height: 7px;
+  border-radius: 50%;
+  background: var(--border2);
+  transition: background .2s, transform .2s;
+}
+.ob-dot.ob-dot-active { background: var(--accent); transform: scale(1.4); }
+.ob-actions { display: flex; gap: .6rem; }
+.ob-btn {
+  flex: 1;
+  padding: .78rem;
+  border-radius: var(--radius-pill);
+  font-size: .86rem;
+  font-weight: 700;
+  font-family: inherit;
+  cursor: pointer;
+  border: none;
+  -webkit-tap-highlight-color: transparent;
+  transition: opacity .15s, transform .1s;
+}
+.ob-btn:active { transform: scale(.97); }
+.ob-btn-primary { background: var(--accent); color: #fff; }
+.ob-btn-skip { background: var(--surface); color: var(--muted); border: 1px solid var(--border2); flex: 0 0 auto; padding: .78rem 1.2rem; }
+
+/* ── MOBILE TYPOGRAPHY IMPROVEMENTS ── */
+@media (max-width: 768px) {
+  .nhead { font-size: .92rem; }
+  .ec-bar-name { font-size: .88rem; }
+  .sc-name { font-size: .9rem; }
+  .sc-score { font-size: 1.4rem; }
+  .wx-temp { font-size: 3.8rem; }
+  .wx-icon { font-size: 3.8rem; }
+  .today-card-value { font-size: 1rem; }
+  .sec { font-size: 1.05rem; }
+  .aud-btn { font-size: .74rem; padding: 7px 13px; }
+  .bor-btn { font-size: .74rem; padding: 6px 13px; }
+  header { padding: 0 .9rem; height: 60px; }
+  .logo-nyc { font-size: 1.6rem; }
+  .logo-live { font-size: 1.6rem; height: 1.6rem; }
+}
 </style>
 </head>
 <body>
@@ -1406,8 +1870,19 @@ html.dark .dark-btn:hover { background: rgba(255,255,255,.18); }
   </div>
 </section>
 
+<!-- BOROUGH SELECTOR -->
+<div class="borough-row" id="borough-row">
+  <span class="borough-lbl">Borough</span>
+  <button class="bor-btn active" onclick="setBorough('all',this)">All NYC</button>
+  <button class="bor-btn" onclick="setBorough('manhattan',this)">Manhattan</button>
+  <button class="bor-btn" onclick="setBorough('brooklyn',this)">Brooklyn</button>
+  <button class="bor-btn" onclick="setBorough('queens',this)">Queens</button>
+  <button class="bor-btn" onclick="setBorough('bronx',this)">The Bronx</button>
+  <button class="bor-btn" onclick="setBorough('staten',this)">Staten Island</button>
+</div>
+
 <!-- NAV -->
-<nav>
+<nav class="top-nav">
   <div class="tab" data-panel="weather" onclick="showPanel('weather',this)" data-i18n="tab_weather">🌤 Weather</div>
   <div class="tab" data-panel="traffic" onclick="showPanel('traffic',this)" data-i18n="tab_traffic">🚦 Traffic</div>
   <div class="tab active" data-panel="cams" onclick="showPanel('cams',this)" data-i18n="tab_cams">📹 Live Cameras</div>
@@ -1435,6 +1910,92 @@ html.dark .dark-btn:hover { background: rgba(255,255,255,.18); }
     <div class="brief-item"><div class="brief-item-k" data-i18n="sports">Sports</div><div class="brief-item-v" id="brief-sports" data-i18n="brief_sports_waiting">Checking latest NY team finals…</div></div>
   </div>
 </section>
+
+<!-- PULL-TO-REFRESH INDICATOR -->
+<div class="ptr-bar" id="ptr-bar"><div class="ptr-spin"></div> Refreshing…</div>
+
+<!-- ═══════════════════════════════
+     TODAY
+═══════════════════════════════ -->
+<div class="panel" id="panel-today">
+  <!-- Hero: weather + greeting -->
+  <div class="today-hero">
+    <div class="today-greeting" id="today-greeting">Good morning, New York 🗽</div>
+    <div class="today-date-line" id="today-date-line">Loading…</div>
+    <div class="today-wx-row">
+      <div class="today-wx-icon" id="today-wx-icon">🌤</div>
+      <div>
+        <div class="today-wx-temp"><span id="today-wx-temp">--</span>°F</div>
+        <div class="today-wx-desc" id="today-wx-desc">Loading weather…</div>
+        <div class="today-wx-feel" id="today-wx-feel"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Status cards -->
+  <div class="sec no-line" style="margin-bottom:.65rem">Today's Status</div>
+  <div class="today-cards">
+    <div class="today-card today-card-info" id="today-asp-card">
+      <div class="today-card-icon">🅿️</div>
+      <div class="today-card-title">Parking (ASP)</div>
+      <div class="today-card-value" id="today-asp-value">Checking…</div>
+      <div class="today-card-sub" id="today-asp-sub"></div>
+    </div>
+    <div class="today-card today-card-info" id="today-subway-card">
+      <div class="today-card-icon">🚇</div>
+      <div class="today-card-title">Subway</div>
+      <div class="today-card-value" id="today-subway-value">Loading…</div>
+      <div class="today-card-sub" id="today-subway-sub"></div>
+    </div>
+    <div class="today-card today-card-info" id="today-wx-extra">
+      <div class="today-card-icon">💨</div>
+      <div class="today-card-title">Wind &amp; Humidity</div>
+      <div class="today-card-value" id="today-wind-value">--</div>
+      <div class="today-card-sub" id="today-humidity-sub"></div>
+    </div>
+    <div class="today-card" id="today-range-card">
+      <div class="today-card-icon">🌡️</div>
+      <div class="today-card-title">Today's Range</div>
+      <div class="today-card-value" id="today-range-value">-- / --°F</div>
+      <div class="today-card-sub" id="today-range-sub">High / Low</div>
+    </div>
+  </div>
+
+  <!-- Latest headlines (pulled from news panel) -->
+  <div class="sec no-line" style="margin-bottom:.65rem">📰 Latest NYC Headlines</div>
+  <div class="today-news-section" id="today-news-section">
+    <div class="subway-loading"><div class="spinner"></div>&nbsp;Loading headlines…</div>
+  </div>
+
+  <!-- Quick actions -->
+  <div class="sec no-line" style="margin-bottom:.65rem">⚡ Quick Actions</div>
+  <div class="today-quick-grid">
+    <a class="today-quick-btn" href="tel:311">
+      <span class="today-quick-icon">📞</span>
+      <span class="today-quick-label">Call 311</span>
+    </a>
+    <a class="today-quick-btn" href="https://511ny.org" target="_blank" rel="noopener">
+      <span class="today-quick-icon">🚦</span>
+      <span class="today-quick-label">511 Traffic</span>
+    </a>
+    <a class="today-quick-btn" href="https://new.mta.info/" target="_blank" rel="noopener">
+      <span class="today-quick-icon">🚇</span>
+      <span class="today-quick-label">MTA Trip Planner</span>
+    </a>
+    <a class="today-quick-btn" href="https://portal.311.nyc.gov/#feedsContainer" target="_blank" rel="noopener">
+      <span class="today-quick-icon">🅿️</span>
+      <span class="today-quick-label">ASP Status</span>
+    </a>
+    <a class="today-quick-btn" href="https://forecast.weather.gov/MapClick.php?CityName=New+York+City&state=NY" target="_blank" rel="noopener">
+      <span class="today-quick-icon">⛅</span>
+      <span class="today-quick-label">NWS Forecast</span>
+    </a>
+    <a class="today-quick-btn" href="tel:911">
+      <span class="today-quick-icon">🚨</span>
+      <span class="today-quick-label">Emergency 911</span>
+    </a>
+  </div>
+</div>
 
 <!-- ═══════════════════════════════
      CAMERAS
@@ -1912,6 +2473,90 @@ html.dark .dark-btn:hover { background: rgba(255,255,255,.18); }
 </div>
 
 <!-- ═══════════════════════════════
+     BOTTOM NAV (mobile)
+═══════════════════════════════ -->
+<nav class="bottom-nav" id="bottom-nav" aria-label="Main navigation">
+  <button class="bn-item active" data-panel="today" onclick="showPanel('today',this)">
+    <span class="bn-icon">🏠</span>
+    <span class="bn-label">Today</span>
+  </button>
+  <button class="bn-item" data-panel="weather" onclick="showPanel('weather',this)">
+    <span class="bn-icon">🌤</span>
+    <span class="bn-label">Weather</span>
+  </button>
+  <button class="bn-item" data-panel="traffic" onclick="showPanel('traffic',this)">
+    <span class="bn-icon">🚦</span>
+    <span class="bn-label">Traffic</span>
+  </button>
+  <button class="bn-item" data-panel="cams" onclick="showPanel('cams',this)">
+    <span class="bn-icon">📹</span>
+    <span class="bn-label">Cams</span>
+  </button>
+  <button class="bn-item" id="bn-more" onclick="openMoreDrawer()">
+    <span class="bn-icon">••• </span>
+    <span class="bn-label">More</span>
+  </button>
+</nav>
+
+<!-- ═══════════════════════════════
+     MORE DRAWER
+═══════════════════════════════ -->
+<div id="more-drawer">
+  <div class="more-drawer-backdrop" onclick="closeMoreDrawer()"></div>
+  <div class="more-drawer-sheet">
+    <div class="more-drawer-handle"></div>
+    <div class="more-drawer-title">All Sections</div>
+    <div class="more-drawer-grid">
+      <button class="more-item" onclick="showPanel('news',null);closeMoreDrawer()"><span class="more-icon">📰</span><span class="more-label">News</span></button>
+      <button class="more-item" onclick="showPanel('sports',null);closeMoreDrawer()"><span class="more-icon">🏆</span><span class="more-label">Sports</span></button>
+      <button class="more-item" onclick="showPanel('stocks',null);closeMoreDrawer()"><span class="more-icon">📈</span><span class="more-label">Stocks</span></button>
+      <button class="more-item" onclick="showPanel('emergency',null);closeMoreDrawer()"><span class="more-icon">🚨</span><span class="more-label">Emergency</span></button>
+      <button class="more-item" onclick="showPanel('flights',null);closeMoreDrawer()"><span class="more-icon">✈️</span><span class="more-label">Flights</span></button>
+      <button class="more-item" onclick="showPanel('toilets',null);closeMoreDrawer()"><span class="more-icon">🚻</span><span class="more-label">Toilets</span></button>
+      <button class="more-item" onclick="showPanel('holidays',null);closeMoreDrawer()"><span class="more-icon">🗓</span><span class="more-label">Holidays</span></button>
+      <button class="more-item" onclick="showPanel('restaurants',null);closeMoreDrawer()"><span class="more-icon">🍽</span><span class="more-label">Restaurants</span></button>
+      <button class="more-item" onclick="showPanel('broadway',null);closeMoreDrawer()"><span class="more-icon">🎭</span><span class="more-label">Broadway</span></button>
+      <button class="more-item" onclick="showPanel('latenight',null);closeMoreDrawer()"><span class="more-icon">🎟</span><span class="more-label">Late Night</span></button>
+      <button class="more-item" onclick="showPanel('places',null);closeMoreDrawer()"><span class="more-icon">📍</span><span class="more-label">Places</span></button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════
+     ONBOARDING (first visit)
+═══════════════════════════════ -->
+<div class="onboarding-overlay" id="onboarding-overlay">
+  <div class="onboarding-sheet">
+    <div class="ob-slides">
+      <div class="ob-slide ob-active" id="ob-slide-0">
+        <div class="ob-emoji">🗽</div>
+        <div class="ob-title">Welcome to NYC Live</div>
+        <div class="ob-body">Your real-time New York City dashboard — live cameras, traffic, subway status, weather, sports and more. Built for New Yorkers and visitors alike.</div>
+      </div>
+      <div class="ob-slide" id="ob-slide-1">
+        <div class="ob-emoji">🚇</div>
+        <div class="ob-title">Subway & Traffic</div>
+        <div class="ob-body">Check real-time subway service status, live traffic maps, alternate-side parking alerts, and bridge/tunnel conditions — all in one place.</div>
+      </div>
+      <div class="ob-slide" id="ob-slide-2">
+        <div class="ob-emoji">🌎</div>
+        <div class="ob-title">For Locals & Tourists</div>
+        <div class="ob-body">Switch between Residents and Tourist mode. Choose your borough. Available in English, Español, Français, and Português.</div>
+      </div>
+    </div>
+    <div class="ob-dots">
+      <div class="ob-dot ob-dot-active"></div>
+      <div class="ob-dot"></div>
+      <div class="ob-dot"></div>
+    </div>
+    <div class="ob-actions">
+      <button class="ob-btn ob-btn-skip" onclick="dismissOnboarding()">Skip</button>
+      <button class="ob-btn ob-btn-primary" id="ob-next-btn" onclick="obNext()">Next →</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════
      JAVASCRIPT
 ═══════════════════════════════ -->
 <script>
@@ -2194,10 +2839,15 @@ const I18N = {
   }
 };
 
-/* ── DARK MODE TOGGLE ── */
+/* ── DARK MODE TOGGLE (follows system preference on first visit) ── */
 (function() {
   const saved = localStorage.getItem('nyclive:dark');
-  const isDark = saved !== null ? saved === 'true' : true; // default: dark
+  let isDark;
+  if (saved !== null) {
+    isDark = saved === 'true';
+  } else {
+    isDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+  }
   if (isDark) document.documentElement.classList.add('dark');
   const btn = document.getElementById('dark-toggle');
   if (btn) btn.textContent = isDark ? '☀️' : '🌙';
@@ -2448,12 +3098,19 @@ setInterval(tick,1000);tick();
 /* ── TABS ── */
 function showPanel(id,el,opts){
   opts = opts || {};
-  if (!isPanelAllowedForAudience(id)) id = 'cams';
+  if (!isPanelAllowedForAudience(id)) id = 'today';
   const panel = document.getElementById('panel-'+id);
   if (!panel) return;
   document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
   document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
   panel.classList.add('active');
+  /* sync bottom nav */
+  const bnPanels = ['today','weather','traffic','cams'];
+  document.querySelectorAll('.bn-item[data-panel]').forEach(function(b){
+    b.classList.toggle('active', b.dataset.panel === id);
+  });
+  const morBtn = document.getElementById('bn-more');
+  if (morBtn) morBtn.classList.toggle('active', !bnPanels.includes(id));
 
   const tab = el
     || (typeof event !== 'undefined' && event && event.currentTarget)
@@ -4110,6 +4767,240 @@ async function loadSubwayStatus() {
   }
 }
 
+/* ════════════════════════════════════════════
+   REDESIGN V2 — new features
+════════════════════════════════════════════ */
+
+/* ── MORE DRAWER ── */
+function openMoreDrawer() {
+  document.getElementById('more-drawer').classList.add('more-drawer-open');
+  document.body.style.overflow = 'hidden';
+}
+function closeMoreDrawer() {
+  document.getElementById('more-drawer').classList.remove('more-drawer-open');
+  document.body.style.overflow = '';
+}
+
+/* ── BOROUGH FILTER ── */
+var currentBorough = localStorage.getItem('nyclive:borough') || 'all';
+function setBorough(b, btn) {
+  currentBorough = b;
+  localStorage.setItem('nyclive:borough', b);
+  document.querySelectorAll('.bor-btn').forEach(function(el){ el.classList.remove('active'); });
+  if (btn) btn.classList.add('active');
+  filterCams();
+}
+// On load: restore active state
+(function(){
+  const saved = localStorage.getItem('nyclive:borough') || 'all';
+  document.querySelectorAll('.bor-btn').forEach(function(btn){
+    const b = btn.getAttribute('onclick') && btn.getAttribute('onclick').match(/setBorough\('([^']+)'/);
+    if (b && b[1] === saved) btn.classList.add('active');
+    else if (saved !== 'all') btn.classList.remove('active');
+  });
+})();
+
+/* ── ONBOARDING ── */
+var obSlide = 0;
+var OB_TOTAL = 3;
+function initOnboarding() {
+  if (localStorage.getItem('nyclive:onboarded')) return;
+  document.getElementById('onboarding-overlay').classList.add('ob-show');
+}
+function obNext() {
+  obSlide++;
+  if (obSlide >= OB_TOTAL) { dismissOnboarding(); return; }
+  document.querySelectorAll('.ob-slide').forEach(function(s,i){ s.classList.toggle('ob-active', i===obSlide); });
+  document.querySelectorAll('.ob-dot').forEach(function(d,i){ d.classList.toggle('ob-dot-active', i===obSlide); });
+  var btn = document.getElementById('ob-next-btn');
+  if (btn && obSlide === OB_TOTAL-1) btn.textContent = 'Get Started ✓';
+}
+function dismissOnboarding() {
+  localStorage.setItem('nyclive:onboarded','1');
+  var el = document.getElementById('onboarding-overlay');
+  el.style.transition = 'opacity .3s';
+  el.style.opacity = '0';
+  setTimeout(function(){ el.classList.remove('ob-show'); el.style.opacity=''; }, 320);
+}
+
+/* ── TODAY PANEL ── */
+function updateTodayGreeting() {
+  var now = new Date();
+  var hourStr = now.toLocaleString('en-US',{timeZone:'America/New_York',hour:'numeric',hour12:false});
+  var h = parseInt(hourStr);
+  var greet = h < 12 ? 'Good Morning' : h < 17 ? 'Good Afternoon' : 'Good Evening';
+  var dateLine = now.toLocaleDateString('en-US',{timeZone:'America/New_York',weekday:'long',month:'long',day:'numeric'});
+  var el = document.getElementById('today-greeting');
+  var dl = document.getElementById('today-date-line');
+  if (el) el.textContent = greet + ', New York 🗽';
+  if (dl) dl.textContent = dateLine;
+}
+
+function syncTodayWeather() {
+  var temp = document.getElementById('wx-temp');
+  var desc = document.getElementById('wx-desc');
+  var feel = document.getElementById('wx-feels');
+  var icon = document.getElementById('wx-icon');
+  if (temp && temp.textContent && temp.textContent !== '--') {
+    var t = document.getElementById('today-wx-temp'); if(t) t.textContent = temp.textContent;
+    var d = document.getElementById('today-wx-desc'); if(d) d.textContent = (desc||{}).textContent || '';
+    var f = document.getElementById('today-wx-feel'); if(f) f.textContent = (feel||{}).textContent || '';
+    var i = document.getElementById('today-wx-icon'); if(i) i.textContent = (icon||{}).textContent || '🌤';
+  }
+  // Wind / humidity from stats
+  var stats = document.getElementById('wx-stats');
+  if (stats) {
+    var labels = stats.querySelectorAll('.wx-stat-lbl');
+    var vals = stats.querySelectorAll('.wx-stat-val');
+    var wind = '--', humidity = '--', hi = '--', lo = '--';
+    labels.forEach(function(l,idx){
+      var txt = l.textContent.toLowerCase();
+      var v = vals[idx] ? vals[idx].textContent : '--';
+      if (txt.includes('wind')) wind = v;
+      if (txt.includes('humid')) humidity = v;
+      if (txt.includes('high')) hi = v;
+      if (txt.includes('low')) lo = v;
+    });
+    var wv = document.getElementById('today-wind-value'); if(wv) wv.textContent = wind;
+    var hs = document.getElementById('today-humidity-sub'); if(hs) hs.textContent = 'Humidity: ' + humidity;
+    var rv = document.getElementById('today-range-value'); if(rv) rv.textContent = hi + ' / ' + lo + '°F';
+  }
+}
+
+function syncTodaySubway() {
+  var grid = document.getElementById('subway-status-grid');
+  if (!grid) return;
+  var lines = grid.querySelectorAll('.subway-line');
+  if (!lines.length) return;
+  var delays = 0, suspended = 0;
+  lines.forEach(function(l){
+    var s = l.querySelector('.subway-status');
+    if (!s) return;
+    if (s.classList.contains('delay')) delays++;
+    if (s.classList.contains('suspended')) suspended++;
+  });
+  var val = document.getElementById('today-subway-value');
+  var sub = document.getElementById('today-subway-sub');
+  var card = document.getElementById('today-subway-card');
+  if (!val) return;
+  if (suspended > 0) {
+    val.textContent = suspended + ' line' + (suspended>1?'s':'') + ' suspended';
+    if (card) { card.className = 'today-card today-card-warn'; }
+    if (sub) sub.textContent = 'See Traffic → Subway Status';
+  } else if (delays > 0) {
+    val.textContent = delays + ' line' + (delays>1?'s':' delay') + (delays>1?' delays':'');
+    if (card) { card.className = 'today-card today-card-warn'; }
+    if (sub) sub.textContent = 'Tap Traffic for details';
+  } else if (lines.length > 0) {
+    val.textContent = 'Good Service';
+    if (card) { card.className = 'today-card today-card-ok'; }
+    if (sub) sub.textContent = 'All lines running normally';
+  }
+}
+
+function syncTodayASP() {
+  var val = document.getElementById('today-asp-value');
+  var sub = document.getElementById('today-asp-sub');
+  var card = document.getElementById('today-asp-card');
+  if (!val) return;
+  var day = new Date().toLocaleDateString('en-US',{timeZone:'America/New_York',weekday:'long'});
+  if (day === 'Saturday' || day === 'Sunday') {
+    val.textContent = 'Suspended';
+    if (sub) sub.textContent = 'No ASP on weekends';
+    if (card) card.className = 'today-card today-card-ok';
+  } else {
+    val.textContent = 'Check 311';
+    if (sub) sub.textContent = 'Tap to see today\'s status';
+    if (card) card.className = 'today-card today-card-info';
+  }
+}
+
+function syncTodayNews() {
+  var section = document.getElementById('today-news-section');
+  if (!section) return;
+  var newsList = document.getElementById('news-list');
+  if (!newsList) return;
+  var items = newsList.querySelectorAll('a.news-item');
+  if (!items.length) return;
+  var html = Array.from(items).slice(0,3).map(function(item){
+    var head = item.querySelector('.nhead');
+    var tag = item.querySelector('.ntag');
+    var href = item.getAttribute('href') || '#';
+    return '<a class="today-news-item" href="' + escapeHtml(href) + '" target="_blank" rel="noopener">' +
+      '<div class="today-news-dot"></div>' +
+      '<div><div class="today-news-tag">' + escapeHtml((tag||{}).textContent||'') + '</div>' +
+      '<div class="today-news-text">' + escapeHtml((head||{}).textContent||'') + '</div></div></a>';
+  }).join('');
+  if (html) section.innerHTML = html;
+}
+
+function loadTodayPanel() {
+  updateTodayGreeting();
+  syncTodayASP();
+  syncTodayWeather();
+  syncTodaySubway();
+  syncTodayNews();
+  // Retry after data loads
+  setTimeout(function(){ syncTodayWeather(); syncTodaySubway(); syncTodayNews(); }, 4000);
+  setTimeout(function(){ syncTodayWeather(); syncTodaySubway(); syncTodayNews(); }, 10000);
+}
+
+/* ── SWIPE NAVIGATION ── */
+(function(){
+  var sx = 0, sy = 0;
+  var ALL_PANELS = ['today','weather','traffic','cams','news','sports','stocks','emergency',
+                    'flights','toilets','holidays','restaurants','broadway','latenight','places'];
+  document.addEventListener('touchstart', function(e){
+    sx = e.touches[0].clientX; sy = e.touches[0].clientY;
+  }, {passive:true});
+  document.addEventListener('touchend', function(e){
+    var dx = e.changedTouches[0].clientX - sx;
+    var dy = e.changedTouches[0].clientY - sy;
+    if (Math.abs(dx) < 65 || Math.abs(dy) > Math.abs(dx) * .7) return;
+    if (sy > window.innerHeight - 80) return;
+    var t = e.target;
+    if (t.closest('iframe,.wx-hourly,.subway-grid,.more-drawer-sheet,.borough-row,nav')) return;
+    var active = document.querySelector('.panel.active');
+    if (!active) return;
+    var cur = active.id.replace('panel-','');
+    var allowed = ALL_PANELS.filter(function(id){ return document.getElementById('panel-'+id) && isPanelAllowedForAudience(id); });
+    var idx = allowed.indexOf(cur);
+    if (idx === -1) return;
+    if (dx < 0 && idx < allowed.length-1) showPanel(allowed[idx+1], document.querySelector('.tab[data-panel="'+allowed[idx+1]+'"]'));
+    else if (dx > 0 && idx > 0) showPanel(allowed[idx-1], document.querySelector('.tab[data-panel="'+allowed[idx-1]+'"]'));
+  }, {passive:true});
+})();
+
+/* ── PULL-TO-REFRESH ── */
+(function(){
+  var startY = 0, triggered = false;
+  var bar = document.getElementById('ptr-bar');
+  document.addEventListener('touchstart', function(e){ startY = e.touches[0].clientY; triggered = false; }, {passive:true});
+  document.addEventListener('touchmove', function(e){
+    if (window.scrollY > 5) return;
+    if (e.touches[0].clientY - startY > 68 && !triggered) {
+      triggered = true;
+      if (bar) bar.classList.add('ptr-visible');
+    }
+  }, {passive:true});
+  document.addEventListener('touchend', function(){
+    if (!triggered) return;
+    triggered = false;
+    setTimeout(function(){
+      if (bar) bar.classList.remove('ptr-visible');
+      var a = document.querySelector('.panel.active');
+      if (!a) return;
+      var id = a.id.replace('panel-','');
+      if (id==='today') { loadTodayPanel(); loadSubwayStatus(); }
+      if (id==='weather' && typeof loadWeather==='function') loadWeather();
+      if (id==='stocks') loadStocksHub();
+      if (id==='sports') loadSportsHub();
+      if (id==='news' && typeof refreshNews==='function') refreshNews();
+      if (id==='traffic') loadSubwayStatus();
+    }, 800);
+  }, {passive:true});
+})();
+
 withLeagueDomIds();
 ensurePanelTrustMeta();
 setPanelUpdated('emergency', new Date());
@@ -4123,12 +5014,19 @@ renderLateNightShows();
 renderPlacesWeBeen();
 applyAudienceMode();
 if (!applyPanelFromHash()) {
-  showPanel('cams', document.querySelector('.tab[data-panel="cams"]'), { updateHash:false });
+  showPanel('today', document.querySelector('.tab[data-panel="today"]'), { updateHash:false });
 }
 initLanguage();
 setInterval(loadStocksHub, 60 * 1000);
 loadSubwayStatus();
 setInterval(loadSubwayStatus, 5 * 60 * 1000);
+loadTodayPanel();
+// Load weather + news in background so Today panel can sync
+setTimeout(function(){
+  if (typeof loadWeather === 'function') loadWeather();
+  if (typeof refreshNews === 'function') refreshNews();
+}, 500);
+initOnboarding();
 
 </script>
 </body>
