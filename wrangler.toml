@@ -1,0 +1,8 @@
+name = "nyclive"
+compatibility_date = "2024-05-12"
+pages_build_output_dir = "."
+
+[[d1_databases]]
+binding = "DB"
+database_name = "nyclive"
+database_id = "5ea53598-c59d-4585-95a5-0547bfe22a43"

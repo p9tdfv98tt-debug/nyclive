@@ -24,38 +24,35 @@
 @import url('https://fonts.googleapis.com/css2?family=Archivo+Black&family=IBM+Plex+Sans+Condensed:wght@400;500;600;700&display=swap');
 
 :root {
-  --bg: #002a86;
-  --bg2: #00349f;
-  --surface: #ffe17b;
-  --surface2: #ffecab;
-  --surface3: #fff4cc;
-  --border: rgba(1, 22, 70, 0.35);
-  --border2: rgba(1, 22, 70, 0.58);
-  --shadow-sm: 0 2px 0 rgba(0,0,0,.14), 0 8px 18px rgba(0, 18, 58, 0.22);
-  --shadow-md: 0 3px 0 rgba(0,0,0,.2), 0 16px 28px rgba(0, 18, 58, 0.28);
-  --shadow-lg: 0 3px 0 rgba(0,0,0,.25), 0 24px 38px rgba(0, 18, 58, 0.35);
-  --accent: #0039a6;
-  --accent-light: #e8f0ff;
-  --accent-hover: #002777;
-  --blue: #0039a6;
-  --blue-light: #dbe7ff;
-  --teal: #008f8f;
-  --green: #11773a;
-  --text: #021333;
-  --text2: #15366f;
-  --muted: #35538b;
-  --radius: 16px;
-  --radius-sm: 12px;
+  --bg: #F7F7F5;
+  --bg2: #F0F0EE;
+  --surface: #ffffff;
+  --surface2: #f8fafc;
+  --surface3: #f1f5f9;
+  --border: #e2e8f0;
+  --border2: #cbd5e1;
+  --shadow-sm: 0 1px 2px rgba(0,0,0,.05);
+  --shadow-md: 0 4px 6px rgba(0,0,0,.05);
+  --shadow-lg: 0 10px 15px rgba(0,0,0,.1);
+  --accent: #0039A6;
+  --accent-light: #e0e7ff;
+  --accent-hover: #002c85;
+  --blue: #0039A6;
+  --blue-light: #eff6ff;
+  --teal: #0d9488;
+  --green: #1a472a;
+  --text: #111827;
+  --text2: #334155;
+  --muted: #64748b;
+  --radius: 4px;
+  --radius-sm: 2px;
   --radius-pill: 999px;
 }
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
 html { scroll-behavior: smooth; }
 body {
-  background:
-    radial-gradient(1600px 800px at 20% -20%, #0a4ec7 0%, transparent 60%),
-    radial-gradient(1200px 700px at 100% 0%, #0f57d4 0%, transparent 60%),
-    linear-gradient(180deg, var(--bg2) 0%, var(--bg) 100%);
+  background: var(--bg);
   color: var(--text);
   font-family: 'IBM Plex Sans Condensed', 'Avenir Next', 'Segoe UI', sans-serif;
   min-height: 100vh;
@@ -63,36 +60,12 @@ body {
   -webkit-font-smoothing: antialiased;
   letter-spacing: .01em;
 }
-body::before {
-  content: '';
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
-  background:
-    repeating-linear-gradient(115deg, rgba(255,255,255,.06) 0 3px, transparent 3px 26px),
-    linear-gradient(180deg, rgba(255,255,255,.05) 0%, rgba(255,255,255,0) 30%);
-  mix-blend-mode: soft-light;
-  z-index: -1;
-}
-body::after {
-  content: '';
-  position: fixed;
-  right: -140px;
-  top: 80px;
-  width: 420px;
-  height: 420px;
-  border-radius: 50%;
-  background: radial-gradient(circle, rgba(255,227,120,.2) 0%, rgba(255,227,120,0) 70%);
-  pointer-events: none;
-  z-index: -1;
-}
 
 /* ── HEADER ── */
 header {
   position: sticky; top: 0; z-index: 100;
-  background: linear-gradient(180deg, #ffde65 0%, #ffd94f 100%);
-  border-bottom: 3px solid var(--accent);
-  box-shadow: 0 2px 0 rgba(0,0,0,.18), 0 8px 20px rgba(0,0,0,.15);
+  background: var(--accent);
+  border-bottom: 4px solid var(--text);
   padding: 0 2rem;
   display: flex; align-items: center; justify-content: space-between;
   height: 68px; gap: 1rem;
@@ -108,7 +81,7 @@ header {
   line-height: 1;
 }
 .logo-nyc {
-  color: #001c63;
+  color: #ffffff;
   font-size: 1.9rem;
   letter-spacing: .03em;
 }
@@ -116,51 +89,22 @@ header {
   position: relative;
   display: inline-flex;
   align-items: center;
-  padding-bottom: 3px;
-}
-.logo-live-wrap::after {
-  content: '';
-  position: absolute;
-  width: 102px;
-  height: 16px;
-  right: -8px;
-  bottom: -2px;
-  border-radius: 0 0 14px 14px;
-  background: linear-gradient(135deg, #ffd200 0%, #ffad00 64%, #f69200 100%);
-  transform: skewX(-23deg) rotate(-5deg);
-  z-index: 0;
 }
 .logo-live {
   position: relative;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  min-width: 152px;
-  height: 44px;
-  padding: 0 20px;
-  color: #ffd94a;
+  height: 40px;
+  padding: 0 16px;
+  color: #ffffff;
   font-size: 1.62rem;
   letter-spacing: .04em;
-  background: linear-gradient(180deg, #154dd7 0%, #0f3fc6 56%, #0b2ea0 100%);
-  border-radius: 24px;
-  transform: skewX(-9deg);
-  box-shadow: inset 0 1px 0 rgba(255,255,255,.26), 0 4px 0 #05216d;
-  z-index: 1;
+  background: var(--green);
+  border-radius: var(--radius-sm);
 }
 .logo-live > span {
   display: inline-block;
-  transform: skewX(9deg);
-}
-.logo-live::before {
-  content: '';
-  position: absolute;
-  left: 10px;
-  right: 10px;
-  top: 2px;
-  height: 42%;
-  border-radius: 20px;
-  background: linear-gradient(180deg, rgba(255,255,255,.24), rgba(255,255,255,0));
-  pointer-events: none;
 }
 .live-badge {
   display: flex; align-items: center; gap: .3rem;
@@ -180,8 +124,8 @@ header {
 @keyframes blink { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.3;transform:scale(.6)} }
 
 .hstats { display: flex; align-items: center; gap: 2rem; margin-left: auto; }
-.hstat-lbl { font-size: .6rem; text-transform: uppercase; letter-spacing: .08em; color: var(--muted); display: block; font-weight: 500; }
-.hstat-val { font-size: .85rem; color: var(--text); display: block; font-weight: 600; font-variant-numeric: tabular-nums; }
+.hstat-lbl { font-size: .6rem; text-transform: uppercase; letter-spacing: .08em; color: rgba(255,255,255,0.7); display: block; font-weight: 500; }
+.hstat-val { font-size: .85rem; color: #ffffff; display: block; font-weight: 600; font-variant-numeric: tabular-nums; }
 .lang-switch {
   display: flex;
   align-items: center;
@@ -249,16 +193,15 @@ header {
 
 /* ── NAV ── */
 nav {
-  background: var(--accent);
-  border-bottom: 2px solid rgba(0,0,0,.25);
-  padding: .3rem 2rem 0;
+  background: var(--surface);
+  border-bottom: 2px solid var(--border);
+  padding: 0 2rem;
   display: flex;
   flex-wrap: nowrap;
   overflow-x: auto;
   scrollbar-width: none;
   position: sticky; top: 68px; z-index: 99;
-  gap: .34rem;
-  box-shadow: 0 2px 0 rgba(0,0,0,.25);
+  gap: 1rem;
 }
 nav::-webkit-scrollbar { display: none; }
 /* Fade-out hint at the right edge so users know there are more tabs */
@@ -273,56 +216,34 @@ nav::after {
   align-self: stretch;
 }
 .tab {
-  padding: .74rem .74rem .68rem;
+  padding: 1rem .74rem;
   font-size: .72rem; font-weight: 700;
-  color: #dbe8ff;
+  color: var(--muted);
   cursor: pointer;
-  border: 1px solid rgba(255,255,255,.2);
-  border-bottom: 3px solid transparent;
-  transition: color .15s, border-color .15s, background .15s, transform .15s;
+  border-bottom: 4px solid transparent;
+  transition: color .15s, border-color .15s;
   white-space: nowrap; user-select: none;
   letter-spacing: .07em;
   text-transform: uppercase;
-  border-radius: 10px 10px 0 0;
-  background: rgba(255,255,255,.06);
 }
 .tab:hover {
-  color: #fff4b8;
-  background: rgba(255,255,255,.14);
+  color: var(--accent);
 }
 .tab.active {
   color: var(--accent);
-  border-color: rgba(0,0,0,.18);
-  border-bottom-color: #ffe17b;
-  background: linear-gradient(180deg, #fff0a5 0%, #ffe17b 100%);
-  box-shadow: 0 2px 0 rgba(0,0,0,.2);
-  transform: translateY(1px);
+  border-bottom-color: var(--accent);
 }
 
 /* ── PANELS ── */
 .panel { display: none; padding: 2.2rem 2rem 80px; max-width: 1280px; margin: 0 auto; animation: fadeIn .25s ease; }
 .panel.active {
   display: block;
-  background: linear-gradient(180deg, #fff4c5 0%, #ffeeb0 100%);
-  border: 2px solid rgba(0, 40, 122, 0.44);
-  border-radius: 18px;
-  box-shadow: var(--shadow-md);
-  backdrop-filter: none;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-top: 6px solid var(--accent);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-sm);
   position: relative;
-}
-.panel.active::before {
-  content: '';
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: 0;
-  height: 8px;
-  border-radius: 16px 16px 0 0;
-  background: repeating-linear-gradient(
-    90deg,
-    #0039a6 0 30px,
-    #ffd100 30px 58px
-  );
 }
 @keyframes fadeIn { from{opacity:0;transform:translateY(6px)} to{opacity:1;transform:none} }
 
@@ -375,10 +296,11 @@ nav::after {
 .dashboard-brief {
   max-width: 1280px;
   margin: 1rem auto .4rem;
-  padding: .9rem 1rem;
+  padding: 1.5rem;
   border-radius: var(--radius);
-  border: 2px solid rgba(0, 40, 122, 0.34);
-  background: linear-gradient(180deg, #fff0be 0%, #ffe79a 100%);
+  border: 1px solid var(--border);
+  border-top: 6px solid var(--green);
+  background: var(--surface);
   box-shadow: var(--shadow-sm);
 }
 .brief-head {
@@ -504,10 +426,10 @@ nav::after {
 
 /* ── CARDS — shared ── */
 .card-base {
-  background: #fffdf1;
+  background: var(--surface);
   border-radius: var(--radius);
   box-shadow: var(--shadow-sm);
-  border: 1px solid rgba(0,57,166,.28);
+  border: 1px solid var(--border);
   overflow: hidden;
   transition: box-shadow .2s, transform .2s;
 }
@@ -522,7 +444,7 @@ nav::after {
   flex: 1; min-width: 180px;
   background: var(--surface);
   border: 1px solid var(--border2);
-  border-radius: var(--radius-pill);
+  border-radius: var(--radius);
   padding: .5rem 1rem;
   color: var(--text);
   font-family: inherit; font-size: .85rem;
@@ -540,7 +462,7 @@ nav::after {
   padding: 6px 16px;
   background: var(--surface); border: 1px solid var(--border2);
   color: var(--text2); font-size: .78rem; font-weight: 500;
-  border-radius: var(--radius-pill);
+  border-radius: var(--radius);
   cursor: pointer; transition: all .15s;
   font-family: inherit; white-space: nowrap;
   box-shadow: var(--shadow-sm);
@@ -595,7 +517,7 @@ nav::after {
 .map-wrap { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; margin-bottom: 1rem; box-shadow: var(--shadow-sm); }
 .map-wrap iframe { width: 100%; border: none; display: block; }
 .map-tabs { display: flex; gap: .5rem; padding: .75rem 1rem; background: var(--surface2); border-bottom: 1px solid var(--border); flex-wrap: wrap; }
-.mt-btn { padding: 6px 16px; background: var(--surface); border: 1px solid var(--border2); color: var(--text2); font-size: .78rem; font-weight: 500; border-radius: var(--radius-pill); cursor: pointer; transition: all .15s; font-family: inherit; box-shadow: var(--shadow-sm); }
+.mt-btn { padding: 6px 16px; background: var(--surface); border: 1px solid var(--border2); color: var(--text2); font-size: .78rem; font-weight: 500; border-radius: var(--radius); cursor: pointer; transition: all .15s; font-family: inherit; box-shadow: var(--shadow-sm); }
 .mt-btn.active { background: var(--accent); border-color: var(--accent); color: #fff; box-shadow: 0 2px 8px rgba(0,57,166,.22); }
 .mt-btn:hover:not(.active) { background: var(--surface3); color: var(--text); }
 
@@ -606,13 +528,13 @@ nav::after {
 .tracker-hdr { padding: .7rem 1rem; background: var(--surface2); border-bottom: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; }
 .tracker-title { font-size: .88rem; font-weight: 600; color: var(--text); letter-spacing: -.01em; }
 .tracker-card iframe { width: 100%; border: none; display: block; }
-.ext-btn { display: inline-flex; align-items: center; gap: .3rem; padding: 5px 12px; border-radius: var(--radius-pill); font-size: .75rem; font-weight: 600; text-decoration: none; transition: all .15s; }
+.ext-btn { display: inline-flex; align-items: center; gap: .3rem; padding: 5px 12px; border-radius: var(--radius); font-size: .75rem; font-weight: 600; text-decoration: none; transition: all .15s; }
 .ext-gold { background: var(--accent-light); color: var(--accent); border: none; }
 .ext-teal { background: #e0f7f4; color: var(--teal); border: none; }
 .ext-btn:hover { opacity: .8; transform: translateY(-1px); }
 
 /* ── WEATHER ── */
-.wx-hero { background: #fffdf2; border: 1px solid rgba(0,57,166,.2); border-radius: var(--radius); padding: 1.5rem; margin-bottom: 1.2rem; position: relative; overflow: hidden; box-shadow: var(--shadow-sm); }
+.wx-hero { background: var(--surface); border: 1px solid var(--border); border-top: 6px solid var(--green); border-radius: var(--radius); padding: 1.5rem; margin-bottom: 1.2rem; position: relative; overflow: hidden; box-shadow: var(--shadow-sm); }
 .wx-hero::before { display:none; }
 .wx-city { font-size: .75rem; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; color: var(--text2); margin-bottom: .3rem; }
 .wx-main { display: flex; align-items: center; gap: 1.5rem; margin-bottom: 1.2rem; flex-wrap: wrap; }
@@ -666,7 +588,7 @@ nav::after {
 .news-layout { display: grid; grid-template-columns: 1fr 300px; gap: 1.2rem; }
 @media(max-width:900px) { .news-layout { grid-template-columns: 1fr; } }
 .news-box { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; box-shadow: var(--shadow-sm); }
-.news-box-hdr { padding: .75rem 1rem; background: #e9f1ff; border-bottom: 1px solid var(--border); font-size: .76rem; font-weight: 800; color: var(--text); letter-spacing: .08em; text-transform: uppercase; }
+.news-box-hdr { padding: .75rem 1rem; background: var(--accent); border-bottom: 1px solid var(--border); font-size: .76rem; font-weight: 800; color: #fff; letter-spacing: .08em; text-transform: uppercase; }
 .news-item { padding: .9rem 1rem; border-bottom: 1px solid var(--border); cursor: pointer; transition: background .12s; display: flex; gap: .75rem; text-decoration: none; }
 .news-item:last-child { border-bottom: none; }
 .news-item:hover { background: var(--surface2); }
@@ -1117,32 +1039,6 @@ html.dark .logo-live {
   border-radius: 0;
   transform: none;
   box-shadow: none;
-  display: inline-flex;
-  align-items: baseline;
-}
-html.dark .logo-live > span {
-  display: inline-block;
-  transform: none;
-  background: linear-gradient(180deg, #ffffff 0%, #f5f8ff 45%, #d7deed 100%);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-  text-shadow: 0 0 18px rgba(255,255,255,.12);
-}
-html.dark .logo-live::before { display: none; }
-html.dark .live-badge { display: none; }
-html.dark .hstat-lbl { color: var(--muted); }
-html.dark .hstat-val { color: #eef2ff; }
-
-html.dark .lang-switch {
-  border-color: rgba(255,255,255,.2);
-  background: rgba(255,255,255,.06);
-  box-shadow: inset 0 1px 0 rgba(255,255,255,.06);
-}
-html.dark .lang-label { color: var(--text2); }
-html.dark .lang-select { color: #f2f4fa; }
-
-html.dark .audience-row {
   background: rgba(14,16,22,.88);
   border-bottom: 1px solid rgba(255,255,255,.12);
   backdrop-filter: blur(10px) saturate(120%);
@@ -1538,36 +1434,14 @@ html.dark .more-drawer-sheet {
 
 /* ── TODAY PANEL ── */
 .today-hero {
-  background: linear-gradient(135deg, #0039a6 0%, #0055d4 100%);
+  background: var(--accent);
   border-radius: var(--radius);
   padding: 1.4rem 1.3rem 1.3rem;
   color: #fff;
   margin-bottom: 1rem;
   position: relative;
   overflow: hidden;
-  box-shadow: var(--shadow-md);
-}
-html.dark .today-hero {
-  background: linear-gradient(135deg, rgba(180,40,40,.35) 0%, rgba(16,18,28,1) 65%);
-  border: 1px solid rgba(255,255,255,.12);
-}
-.today-hero::before {
-  content: '';
-  position: absolute;
-  right: -40px; top: -40px;
-  width: 200px; height: 200px;
-  border-radius: 50%;
-  background: rgba(255,255,255,.07);
-  pointer-events: none;
-}
-.today-hero::after {
-  content: '';
-  position: absolute;
-  right: 60px; bottom: -60px;
-  width: 140px; height: 140px;
-  border-radius: 50%;
-  background: rgba(255,255,255,.04);
-  pointer-events: none;
+  box-shadow: var(--shadow-sm);
 }
 .today-greeting {
   font-size: .7rem;
@@ -1611,7 +1485,7 @@ html.dark .today-hero {
 .today-card {
   background: var(--surface);
   border: 1px solid var(--border);
-  border-left: 3px solid var(--border2);
+  border-top: 6px solid var(--border2);
   border-radius: var(--radius);
   padding: .95rem 1rem;
   box-shadow: var(--shadow-sm);
@@ -1639,11 +1513,9 @@ html.dark .today-hero {
   margin-top: .2rem;
   line-height: 1.4;
 }
-.today-card-ok  { border-left-color: #11773a; }
-.today-card-warn { border-left-color: #c45800; }
-.today-card-info { border-left-color: var(--accent); }
-html.dark .today-card-ok   { border-left-color: #6dd68a; }
-html.dark .today-card-warn { border-left-color: #ffb347; }
+.today-card-ok  { border-top-color: var(--green); }
+.today-card-warn { border-top-color: #c45800; }
+.today-card-info { border-top-color: var(--accent); }
 
 .today-news-section { margin-bottom: 1rem; }
 .today-news-item {
@@ -1678,7 +1550,7 @@ html.dark .today-card-warn { border-left-color: #ffb347; }
   padding: .8rem .4rem;
   background: var(--surface);
   border: 1px solid var(--border);
-  border-radius: var(--radius-sm);
+  border-radius: var(--radius);
   text-decoration: none;
   transition: background .12s, transform .1s;
   -webkit-tap-highlight-color: transparent;
@@ -1864,6 +1736,7 @@ html.dark .onboarding-sheet { background: #1a1c26; }
       <option value="pt-BR">Portuguese (Brazil)</option>
       <option value="es">Español</option>
       <option value="fr">Français</option>
+      <option value="pl">Polski</option>
     </select>
   </div>
   <button id="dark-toggle" class="dark-btn" onclick="toggleDark()" title="Toggle dark / light mode" aria-label="Toggle dark mode">🌙</button>
@@ -2844,6 +2717,75 @@ const I18N = {
     updated_prefix: 'Mis à jour',
     et: 'ET',
     traffic_snapshot_prefix: 'Carte actualisée à',
+  },
+  pl: {
+    nyc_time: 'Czas w NYC',
+    date: 'Data',
+    temp: 'Temp.',
+    language: 'Język',
+    tab_cams: '📹 Kamery na żywo',
+    tab_traffic: '🚦 Ruch drogowy',
+    tab_flights: '✈️ Loty i Statki',
+    tab_weather: '🌤 Pogoda',
+    tab_news: '📰 Wiadomości',
+    tab_holidays: '🗓 Święta',
+    tab_emergency: '🚨 Numer alarmowy',
+    tab_toilets: '🚻 Publiczne toalety',
+    tab_sports: '🏆 Sport',
+    tab_stocks: '📈 Giełda',
+    tab_restaurants: '🍽 Klasyczne restauracje',
+    tab_broadway: '🎭 Spektakle Broadway',
+    tab_latenight: '🎟 Udział w programach nocnych',
+    tab_places_wevebeen: '📍 Miejsca, w których byliśmy',
+    audience_label: 'Odbiorcy',
+    audience_residents: 'Mieszkańcy NYC',
+    audience_tourists: 'Turyści NYC',
+    brief_title: 'Co zmieniło się od ostatniego sprawdzenia',
+    weather: 'Pogoda',
+    traffic: 'Ruch drogowy',
+    sports: 'Sport',
+    brief_weather_waiting: 'Oczekiwanie na aktualizację pogody…',
+    brief_traffic_waiting: 'Monitorowanie warunków drogowych…',
+    brief_sports_waiting: 'Sprawdzanie ostatnich wyników drużyn z NY…',
+    cams_title: 'Kamery NYC na żywo',
+    cam_search_placeholder: '🔍  Szukaj kamer…',
+    all: 'Wszystkie',
+    midtown: 'Midtown',
+    downtown: 'Downtown',
+    uptown: 'Uptown',
+    brooklyn: 'Brooklyn',
+    landmarks: 'Zabytki',
+    camera_singular: 'kamera',
+    camera_plural: 'kamery',
+    emergency_title: 'Kontakty alarmowe',
+    stocks_title: 'Główne indeksy USA — Na żywo',
+    toilets_title: 'Publiczne toalety — Mapa NYC',
+    restaurants_title: 'Klasyczne restauracje w NYC',
+    broadway_title: 'Spektakle na Broadwayu (NYC)',
+    latenight_title: 'Udział w programach nocnych',
+    places_wevebeen_title: 'Miejsca, w których byliśmy',
+    restaurants_search_placeholder: 'Szukaj restauracji lub dzielnicy...',
+    bway_search_placeholder: 'Szukaj spektaklu...',
+    latenight_search_placeholder: 'Szukaj programu...',
+    places_search_placeholder: 'Szukaj miejsca lub dzielnicy...',
+    toilets_search_placeholder: 'Szukaj toalety, okolicy lub operatora...',
+    restaurants_label: 'Restauracje',
+    shows_label: 'Spektakle',
+    opportunities_label: 'Możliwości',
+    places_label: 'Miejsca',
+    toilets_locations_label: 'Lokalizacje',
+    toilets_loading: 'Wczytywanie toalet publicznych w NYC…',
+    toilets_ready: 'Lokalizacje toalet publicznych załadowane',
+    toilets_error: 'Nie udało się załadować danych o toaletach.',
+    toilets_source_primary: 'Źródło: NYC Open Data — Toalety Publiczne',
+    toilets_source_secondary: 'Otwarte lokalizacje ze współrzędnymi',
+    first_visit: 'Pierwsza wizyta',
+    last_visit: 'Ostatnia wizyta',
+    times_saved: 'razy zapisano',
+    reviewed_short: 'oceniono',
+    updated_prefix: 'Zaktualizowano',
+    et: 'ET',
+    traffic_snapshot_prefix: 'Mapa zaktualizowana o',
   }
 };
 
@@ -2868,7 +2810,7 @@ function toggleDark() {
   if (btn) btn.textContent = isDark ? '☀️' : '🌙';
 }
 
-const LOCALES = { en:'en-US', 'pt-BR':'pt-BR', es:'es-ES', fr:'fr-FR' };
+const LOCALES = { en:'en-US', 'pt-BR':'pt-BR', es:'es-ES', fr:'fr-FR', pl:'pl-PL' };
 const LANG_STORAGE_KEY = 'nyclive:lang';
 const SAVED_LANG = localStorage.getItem(LANG_STORAGE_KEY);
 let currentLang = (SAVED_LANG && I18N[SAVED_LANG]) ? SAVED_LANG : 'en';
@@ -2877,6 +2819,7 @@ let currentAudience = localStorage.getItem(AUDIENCE_STORAGE_KEY) === 'residents'
 const RESIDENT_HIDDEN_PANELS = ['restaurants', 'broadway', 'latenight', 'places'];
 
 const COUNTRY_TO_LANG = {
+  PL: 'pl',
   BR: 'pt-BR',
   FR: 'fr', BE: 'fr', CH: 'fr', LU: 'fr', MC: 'fr',
   ES: 'es', MX: 'es', AR: 'es', CO: 'es', CL: 'es', PE: 'es', VE: 'es',

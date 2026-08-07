@@ -1,0 +1,272 @@
+{
+  "project": "NYC LIVE",
+  "description": "Real-time NYC dashboard PWA with 6 distinct design approaches",
+  "viewport": {
+    "width": 375,
+    "height": 812,
+    "safe_area_top": 47,
+    "safe_area_bottom": 34
+  },
+  "designs": {
+    "1_glassmorphism": {
+      "name": "Glassmorphism + Dark Mode",
+      "target_audience": "Young NYC tech crowd, night mode users, modern aesthetes",
+      "theme": "Modern minimalist with frosted glass effects",
+      "color_palette": {
+        "background": "#0a0a0a",
+        "gradient_base": "#1a0a2e",
+        "card_bg": "rgba(255,255,255,0.08)",
+        "primary_accent": "#00ffff",
+        "secondary_accent": "#ff006e",
+        "text": "#ffffff"
+      },
+      "typography": {
+        "font_family": "SF Pro Display",
+        "weights": [400, 700],
+        "sizes": {
+          "time_display": "32px",
+          "card_value": "28px",
+          "label": "12px"
+        }
+      },
+      "key_features": [
+        "Frosted glass cards with 20px blur",
+        "Neon cyan glow effects",
+        "Dark mode optimized",
+        "Minimal text, visual-first"
+      ],
+      "interaction_patterns": [
+        "Tap to expand video",
+        "Horizontal swipe between feeds",
+        "Double-tap to favorite",
+        "Long-press menu"
+      ],
+      "best_for": "Modern aesthetics, tech-savvy users, night browsing"
+    },
+    "2_retro_80s": {
+      "name": "Retro 80s/90s NYC",
+      "target_audience": "Nostalgic users, gamers, design enthusiasts, playful brand advocates",
+      "theme": "VHS aesthetic with scanline effects and neon colors",
+      "color_palette": {
+        "primary_neon": "#ff006e",
+        "secondary_neon": "#00ffff",
+        "tertiary_neon": "#ffff00",
+        "gradient": "#8338ec",
+        "background": "rgba(0,0,0,0.4)",
+        "text": "#ffff00"
+      },
+      "typography": {
+        "font_family": "Courier New, monospace",
+        "weights": [700],
+        "sizes": {
+          "title": "14px",
+          "content": "11px",
+          "glitch": "10px"
+        },
+        "effects": "text-shadow 3px 3px"
+      },
+      "key_features": [
+        "CRT scanlines overlay",
+        "Chunky ASCII-style tiles",
+        "Pixelated aesthetics",
+        "Animated glitch effects"
+      ],
+      "interaction_patterns": [
+        "Hover: scale-up with glow",
+        "Click: pixel animations",
+        "Scanline animations",
+        "Random glitch overlays"
+      ],
+      "best_for": "Memorable brand, viral potential, playful experience, nostalgia"
+    },
+    "3_bloomberg_terminal": {
+      "name": "News Ticker / Bloomberg Terminal",
+      "target_audience": "Finance professionals, data enthusiasts, traders, analysts",
+      "theme": "Classic green-on-black financial terminal",
+      "color_palette": {
+        "background": "#000000",
+        "text": "#00ff00",
+        "alert": "#ffaa00",
+        "header_bg": "#001a00",
+        "border": "#00ff00"
+      },
+      "typography": {
+        "font_family": "Courier New, monospace",
+        "weights": [400],
+        "sizes": {
+          "header": "11px",
+          "ticker": "10px",
+          "data": "10px"
+        },
+        "spacing": "monospace, no kerning"
+      },
+      "key_features": [
+        "100% information density",
+        "Stock ticker at top",
+        "Text-only interface",
+        "Zero chrome/embellishment"
+      ],
+      "interaction_patterns": [
+        "Text navigation only",
+        "Continuous ticker scroll",
+        "Alert highlights",
+        "Minimal visual feedback"
+      ],
+      "best_for": "Data-focused users, traders, maximum information display, accessibility (high contrast)"
+    },
+    "4_ios_native": {
+      "name": "Apple iOS Native",
+      "target_audience": "Apple ecosystem users, premium experience seekers, accessibility-focused",
+      "theme": "Clean, minimal iOS design following HIG",
+      "color_palette": {
+        "background": "#f9f9f9",
+        "card_bg": "#ffffff",
+        "text": "#000000",
+        "primary_accent": "#0039a6",
+        "success": "#34c759",
+        "border": "#e0e0e0"
+      },
+      "typography": {
+        "font_family": "SF Pro Display / SF Pro Text",
+        "weights": [400, 500, 600, 700],
+        "sizes": {
+          "time": "34px",
+          "label": "12px",
+          "value": "24px"
+        }
+      },
+      "key_features": [
+        "Soft neumorphic shadows",
+        "12px radius cards",
+        "Large 44px+ touch targets",
+        "Minimal color palette"
+      ],
+      "interaction_patterns": [
+        "Standard iOS haptic feedback",
+        "Pull-to-refresh",
+        "Sheet modals",
+        "Standard gestures"
+      ],
+      "best_for": "Broad appeal, premium feel, accessibility, familiar patterns, trustworthy"
+    },
+    "5_subway_map": {
+      "name": "Subway Map Inspired",
+      "target_audience": "NYC locals, transit users, design appreciators, on-brand loyalists",
+      "theme": "MTA visual language with geometric, bold design",
+      "color_palette": {
+        "header_bg": "#0039a6",
+        "line_1_red": "#EE352E",
+        "line_ac_orange": "#FF6319",
+        "weather_blue": "#0039a6",
+        "status_box": "#f0f0f0",
+        "text": "#000000"
+      },
+      "typography": {
+        "font_family": "Clean sans-serif",
+        "weights": [600, 700],
+        "sizes": {
+          "title": "16px",
+          "station": "11px"
+        }
+      },
+      "key_features": [
+        "Colored station tiles (MTA lines)",
+        "Quick-access stations",
+        "Map-like layout",
+        "Native MTA color scheme"
+      ],
+      "interaction_patterns": [
+        "Tap station for details",
+        "Color-coded categories",
+        "Scale animation on tap",
+        "Modal sheets"
+      ],
+      "best_for": "Brand loyalty, NYC locals, clever design, strong brand equity"
+    },
+    "6_social_feed": {
+      "name": "Social Media Feed (Instagram/TikTok)",
+      "target_audience": "Gen Z, casual users, shareable-first audiences",
+      "theme": "Familiar social media interface with infinite scroll",
+      "color_palette": {
+        "background": "#ffffff",
+        "card_bg": "#ffffff",
+        "text": "#000000",
+        "secondary_text": "#666666",
+        "divider": "#eeeeee",
+        "brand_blue": "#0039a6",
+        "brand_yellow": "#ffd84f"
+      },
+      "typography": {
+        "font_family": "System sans-serif",
+        "weights": [400, 500, 600],
+        "sizes": {
+          "logo": "18px",
+          "username": "12px",
+          "caption": "13px"
+        }
+      },
+      "key_features": [
+        "Vertical infinite scroll",
+        "Large full-width images",
+        "Story avatars at top",
+        "Minimal chrome"
+      ],
+      "interaction_patterns": [
+        "Vertical swipe",
+        "Double-tap to like",
+        "Long-press menu",
+        "Share directly",
+        "Pull-to-refresh"
+      ],
+      "best_for": "Engagement, shareability, Gen Z, viral potential, casual browsing"
+    }
+  },
+  "comparative_analysis": {
+    "information_density": {
+      "highest": "3_bloomberg_terminal",
+      "high": "5_subway_map",
+      "medium_high": ["1_glassmorphism", "4_ios_native"],
+      "medium": "2_retro_80s",
+      "lowest": "6_social_feed"
+    },
+    "mobile_first_score": {
+      "5_stars": ["6_social_feed", "4_ios_native"],
+      "4_stars": ["5_subway_map", "1_glassmorphism"],
+      "3_stars": "2_retro_80s",
+      "2_stars": "3_bloomberg_terminal"
+    },
+    "brand_alignment_metrocard": {
+      "maximum": "5_subway_map",
+      "high": ["4_ios_native", "6_social_feed"],
+      "low": ["1_glassmorphism", "2_retro_80s"],
+      "none": "3_bloomberg_terminal"
+    }
+  },
+  "recommendations": {
+    "brand_loyalty": ["5_subway_map", "4_ios_native"],
+    "maximum_engagement": "6_social_feed",
+    "data_focused": ["3_bloomberg_terminal", "1_glassmorphism"],
+    "playful_unique": "2_retro_80s",
+    "broad_appeal": "4_ios_native"
+  },
+  "implementation_specs": {
+    "all_designs": {
+      "viewport_width": "375px",
+      "viewport_height": "812px",
+      "min_touch_target": "44x44px",
+      "safe_area_notch": true,
+      "landscape_support": true
+    },
+    "performance_notes": {
+      "1_glassmorphism": "Monitor blur() performance on older devices",
+      "3_bloomberg_terminal": "CSS-only, minimal JS overhead",
+      "6_social_feed": "Virtual scrolling required for performance"
+    },
+    "accessibility": {
+      "best": "4_ios_native",
+      "good": "3_bloomberg_terminal",
+      "ok": ["1_glassmorphism", "5_subway_map", "6_social_feed"],
+      "challenging": "2_retro_80s"
+    }
+  }
+}
