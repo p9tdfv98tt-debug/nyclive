@@ -7,8 +7,7 @@
 <meta property="og:title" content="NYC LIVE">
 <meta property="og:description" content="Real-time NYC dashboard — cameras, traffic, subway, weather, sports and more.">
 <meta property="og:type" content="website">
-<meta name="theme-color" content="#0039a6" media="(prefers-color-scheme: light)">
-<meta name="theme-color" content="#07090e" media="(prefers-color-scheme: dark)">
+<meta name="theme-color" content="#101214">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="NYC Live">
@@ -24,35 +23,41 @@
 @import url('https://fonts.googleapis.com/css2?family=Archivo+Black&family=IBM+Plex+Sans+Condensed:wght@400;500;600;700&display=swap');
 
 :root {
-  --bg: #F7F7F5;
-  --bg2: #F0F0EE;
-  --surface: #ffffff;
-  --surface2: #f8fafc;
-  --surface3: #f1f5f9;
-  --border: #e2e8f0;
-  --border2: #cbd5e1;
-  --shadow-sm: 0 1px 2px rgba(0,0,0,.05);
-  --shadow-md: 0 4px 6px rgba(0,0,0,.05);
-  --shadow-lg: 0 10px 15px rgba(0,0,0,.1);
-  --accent: #0039A6;
-  --accent-light: #e0e7ff;
-  --accent-hover: #002c85;
-  --blue: #0039A6;
-  --blue-light: #eff6ff;
-  --teal: #0d9488;
-  --green: #1a472a;
-  --text: #111827;
-  --text2: #334155;
-  --muted: #64748b;
-  --radius: 4px;
-  --radius-sm: 2px;
+  --bg: #c7c5ba;
+  --bg2: #bcbaad;
+  --surface: #e8e6dc;
+  --surface2: #f0eee4;
+  --surface3: #f7f5ea;
+  --border: rgba(20, 18, 12, 0.16);
+  --border2: rgba(20, 18, 12, 0.30);
+  --shadow-sm: 0 2px 0 rgba(0,0,0,.08), 0 8px 18px rgba(20, 18, 10, 0.14);
+  --shadow-md: 0 3px 0 rgba(0,0,0,.1), 0 16px 28px rgba(20, 18, 10, 0.18);
+  --shadow-lg: 0 3px 0 rgba(0,0,0,.12), 0 24px 38px rgba(20, 18, 10, 0.22);
+  --accent: #c1440e;
+  --accent-light: rgba(193,68,14,.12);
+  --accent-hover: #9c380b;
+  --blue: #1f5fa8;
+  --blue-light: #dbe6f2;
+  --teal: #2f7d6d;
+  --green: #2f7d46;
+  --text: #1e1d19;
+  --text2: #4a4844;
+  --muted: #6d6b62;
+  --go: #2f7d46;
+  --caution: #b8790f;
+  --stop: #c1440e;
+  --radius: 16px;
+  --radius-sm: 12px;
   --radius-pill: 999px;
 }
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
 html { scroll-behavior: smooth; }
 body {
-  background: var(--bg);
+  background:
+    radial-gradient(1600px 800px at 20% -20%, #d6d4c8 0%, transparent 60%),
+    radial-gradient(1200px 700px at 100% 0%, #cecbbd 0%, transparent 60%),
+    linear-gradient(180deg, var(--bg2) 0%, var(--bg) 100%);
   color: var(--text);
   font-family: 'IBM Plex Sans Condensed', 'Avenir Next', 'Segoe UI', sans-serif;
   min-height: 100vh;
@@ -60,16 +65,41 @@ body {
   -webkit-font-smoothing: antialiased;
   letter-spacing: .01em;
 }
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background:
+    repeating-linear-gradient(115deg, rgba(255,255,255,.06) 0 3px, transparent 3px 26px),
+    linear-gradient(180deg, rgba(255,255,255,.05) 0%, rgba(255,255,255,0) 30%);
+  mix-blend-mode: soft-light;
+  z-index: -1;
+}
+body::after {
+  content: '';
+  position: fixed;
+  right: -140px;
+  top: 80px;
+  width: 420px;
+  height: 420px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255,227,120,.2) 0%, rgba(255,227,120,0) 70%);
+  pointer-events: none;
+  z-index: -1;
+}
 
 /* ── HEADER ── */
 header {
   position: sticky; top: 0; z-index: 100;
-  background: var(--accent);
-  border-bottom: 4px solid var(--text);
+  background: linear-gradient(180deg, #ffde65 0%, #ffd94f 100%);
+  border-bottom: 3px solid var(--accent);
+  box-shadow: 0 2px 0 rgba(0,0,0,.18), 0 8px 20px rgba(0,0,0,.15);
   padding: 0 2rem;
   display: flex; align-items: center; justify-content: space-between;
-  height: 68px; gap: 1rem;
+  min-height: 68px; gap: 1rem;
 }
+.header-right { display: flex; align-items: center; gap: .8rem; margin-left: auto; flex-shrink: 0; }
 .logo {
   display: inline-flex;
   align-items: center;
@@ -81,7 +111,7 @@ header {
   line-height: 1;
 }
 .logo-nyc {
-  color: #ffffff;
+  color: #001c63;
   font-size: 1.9rem;
   letter-spacing: .03em;
 }
@@ -89,22 +119,51 @@ header {
   position: relative;
   display: inline-flex;
   align-items: center;
+  padding-bottom: 3px;
+}
+.logo-live-wrap::after {
+  content: '';
+  position: absolute;
+  width: 102px;
+  height: 16px;
+  right: -8px;
+  bottom: -2px;
+  border-radius: 0 0 14px 14px;
+  background: linear-gradient(135deg, #ffd200 0%, #ffad00 64%, #f69200 100%);
+  transform: skewX(-23deg) rotate(-5deg);
+  z-index: 0;
 }
 .logo-live {
   position: relative;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  height: 40px;
-  padding: 0 16px;
-  color: #ffffff;
+  min-width: 152px;
+  height: 44px;
+  padding: 0 20px;
+  color: #ffd94a;
   font-size: 1.62rem;
   letter-spacing: .04em;
-  background: var(--green);
-  border-radius: var(--radius-sm);
+  background: linear-gradient(180deg, #154dd7 0%, #0f3fc6 56%, #0b2ea0 100%);
+  border-radius: 24px;
+  transform: skewX(-9deg);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.26), 0 4px 0 #05216d;
+  z-index: 1;
 }
 .logo-live > span {
   display: inline-block;
+  transform: skewX(9deg);
+}
+.logo-live::before {
+  content: '';
+  position: absolute;
+  left: 10px;
+  right: 10px;
+  top: 2px;
+  height: 42%;
+  border-radius: 20px;
+  background: linear-gradient(180deg, rgba(255,255,255,.24), rgba(255,255,255,0));
+  pointer-events: none;
 }
 .live-badge {
   display: flex; align-items: center; gap: .3rem;
@@ -124,8 +183,8 @@ header {
 @keyframes blink { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.3;transform:scale(.6)} }
 
 .hstats { display: flex; align-items: center; gap: 2rem; margin-left: auto; }
-.hstat-lbl { font-size: .6rem; text-transform: uppercase; letter-spacing: .08em; color: rgba(255,255,255,0.7); display: block; font-weight: 500; }
-.hstat-val { font-size: .85rem; color: #ffffff; display: block; font-weight: 600; font-variant-numeric: tabular-nums; }
+.hstat-lbl { font-size: .6rem; text-transform: uppercase; letter-spacing: .08em; color: var(--muted); display: block; font-weight: 500; }
+.hstat-val { font-size: .85rem; color: var(--text); display: block; font-weight: 600; font-variant-numeric: tabular-nums; }
 .lang-switch {
   display: flex;
   align-items: center;
@@ -193,15 +252,16 @@ header {
 
 /* ── NAV ── */
 nav {
-  background: var(--surface);
-  border-bottom: 2px solid var(--border);
-  padding: 0 2rem;
+  background: var(--accent);
+  border-bottom: 2px solid rgba(0,0,0,.25);
+  padding: .3rem 2rem 0;
   display: flex;
   flex-wrap: nowrap;
   overflow-x: auto;
   scrollbar-width: none;
   position: sticky; top: 68px; z-index: 99;
-  gap: 1rem;
+  gap: .34rem;
+  box-shadow: 0 2px 0 rgba(0,0,0,.25);
 }
 nav::-webkit-scrollbar { display: none; }
 /* Fade-out hint at the right edge so users know there are more tabs */
@@ -216,34 +276,71 @@ nav::after {
   align-self: stretch;
 }
 .tab {
-  padding: 1rem .74rem;
+  padding: .74rem .74rem .68rem;
   font-size: .72rem; font-weight: 700;
-  color: var(--muted);
+  color: #fdf1de;
   cursor: pointer;
-  border-bottom: 4px solid transparent;
-  transition: color .15s, border-color .15s;
+  border: 1px solid rgba(255,255,255,.2);
+  border-bottom: 3px solid transparent;
+  transition: color .15s, border-color .15s, background .15s, transform .15s;
   white-space: nowrap; user-select: none;
   letter-spacing: .07em;
   text-transform: uppercase;
+  border-radius: 10px 10px 0 0;
+  background: rgba(255,255,255,.06);
+  display: inline-flex;
+  align-items: center;
+  gap: .4rem;
 }
 .tab:hover {
-  color: var(--accent);
+  color: #fff4b8;
+  background: rgba(255,255,255,.14);
 }
 .tab.active {
   color: var(--accent);
-  border-bottom-color: var(--accent);
+  border-color: rgba(0,0,0,.18);
+  border-bottom-color: #ffe17b;
+  background: linear-gradient(180deg, #fff0a5 0%, #ffe17b 100%);
+  box-shadow: 0 2px 0 rgba(0,0,0,.2);
+  transform: translateY(1px);
 }
+
+/* ── NAV BULLETS: subway-bullet marks, replacing emoji icons ── */
+.nav-bullet {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 1.5em; height: 1.5em; border-radius: 50%;
+  font-size: .82em; font-weight: 800; line-height: 1;
+  color: #fff; flex-shrink: 0;
+  font-family: 'IBM Plex Sans Condensed', sans-serif;
+  text-transform: none;
+  letter-spacing: 0;
+}
+.nav-bullet--ink { color: #1c1600; }
 
 /* ── PANELS ── */
 .panel { display: none; padding: 2.2rem 2rem 80px; max-width: 1280px; margin: 0 auto; animation: fadeIn .25s ease; }
 .panel.active {
   display: block;
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-top: 6px solid var(--accent);
-  border-radius: var(--radius);
-  box-shadow: var(--shadow-sm);
+  background: linear-gradient(180deg, #fff4c5 0%, #ffeeb0 100%);
+  border: 2px solid rgba(0, 40, 122, 0.44);
+  border-radius: 18px;
+  box-shadow: var(--shadow-md);
+  backdrop-filter: none;
   position: relative;
+}
+.panel.active::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  height: 8px;
+  border-radius: 16px 16px 0 0;
+  background: repeating-linear-gradient(
+    90deg,
+    #0039a6 0 30px,
+    #ffd100 30px 58px
+  );
 }
 @keyframes fadeIn { from{opacity:0;transform:translateY(6px)} to{opacity:1;transform:none} }
 
@@ -296,11 +393,10 @@ nav::after {
 .dashboard-brief {
   max-width: 1280px;
   margin: 1rem auto .4rem;
-  padding: 1.5rem;
+  padding: .9rem 1rem;
   border-radius: var(--radius);
-  border: 1px solid var(--border);
-  border-top: 6px solid var(--green);
-  background: var(--surface);
+  border: 2px solid rgba(0, 40, 122, 0.34);
+  background: linear-gradient(180deg, #fff0be 0%, #ffe79a 100%);
   box-shadow: var(--shadow-sm);
 }
 .brief-head {
@@ -426,10 +522,10 @@ nav::after {
 
 /* ── CARDS — shared ── */
 .card-base {
-  background: var(--surface);
+  background: #fffdf1;
   border-radius: var(--radius);
   box-shadow: var(--shadow-sm);
-  border: 1px solid var(--border);
+  border: 1px solid rgba(0,57,166,.28);
   overflow: hidden;
   transition: box-shadow .2s, transform .2s;
 }
@@ -444,7 +540,7 @@ nav::after {
   flex: 1; min-width: 180px;
   background: var(--surface);
   border: 1px solid var(--border2);
-  border-radius: var(--radius);
+  border-radius: var(--radius-pill);
   padding: .5rem 1rem;
   color: var(--text);
   font-family: inherit; font-size: .85rem;
@@ -462,7 +558,7 @@ nav::after {
   padding: 6px 16px;
   background: var(--surface); border: 1px solid var(--border2);
   color: var(--text2); font-size: .78rem; font-weight: 500;
-  border-radius: var(--radius);
+  border-radius: var(--radius-pill);
   cursor: pointer; transition: all .15s;
   font-family: inherit; white-space: nowrap;
   box-shadow: var(--shadow-sm);
@@ -517,7 +613,7 @@ nav::after {
 .map-wrap { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; margin-bottom: 1rem; box-shadow: var(--shadow-sm); }
 .map-wrap iframe { width: 100%; border: none; display: block; }
 .map-tabs { display: flex; gap: .5rem; padding: .75rem 1rem; background: var(--surface2); border-bottom: 1px solid var(--border); flex-wrap: wrap; }
-.mt-btn { padding: 6px 16px; background: var(--surface); border: 1px solid var(--border2); color: var(--text2); font-size: .78rem; font-weight: 500; border-radius: var(--radius); cursor: pointer; transition: all .15s; font-family: inherit; box-shadow: var(--shadow-sm); }
+.mt-btn { padding: 6px 16px; background: var(--surface); border: 1px solid var(--border2); color: var(--text2); font-size: .78rem; font-weight: 500; border-radius: var(--radius-pill); cursor: pointer; transition: all .15s; font-family: inherit; box-shadow: var(--shadow-sm); }
 .mt-btn.active { background: var(--accent); border-color: var(--accent); color: #fff; box-shadow: 0 2px 8px rgba(0,57,166,.22); }
 .mt-btn:hover:not(.active) { background: var(--surface3); color: var(--text); }
 
@@ -528,13 +624,13 @@ nav::after {
 .tracker-hdr { padding: .7rem 1rem; background: var(--surface2); border-bottom: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; }
 .tracker-title { font-size: .88rem; font-weight: 600; color: var(--text); letter-spacing: -.01em; }
 .tracker-card iframe { width: 100%; border: none; display: block; }
-.ext-btn { display: inline-flex; align-items: center; gap: .3rem; padding: 5px 12px; border-radius: var(--radius); font-size: .75rem; font-weight: 600; text-decoration: none; transition: all .15s; }
+.ext-btn { display: inline-flex; align-items: center; gap: .3rem; padding: 5px 12px; border-radius: var(--radius-pill); font-size: .75rem; font-weight: 600; text-decoration: none; transition: all .15s; }
 .ext-gold { background: var(--accent-light); color: var(--accent); border: none; }
 .ext-teal { background: #e0f7f4; color: var(--teal); border: none; }
 .ext-btn:hover { opacity: .8; transform: translateY(-1px); }
 
 /* ── WEATHER ── */
-.wx-hero { background: var(--surface); border: 1px solid var(--border); border-top: 6px solid var(--green); border-radius: var(--radius); padding: 1.5rem; margin-bottom: 1.2rem; position: relative; overflow: hidden; box-shadow: var(--shadow-sm); }
+.wx-hero { background: #fffdf2; border: 1px solid rgba(0,57,166,.2); border-radius: var(--radius); padding: 1.5rem; margin-bottom: 1.2rem; position: relative; overflow: hidden; box-shadow: var(--shadow-sm); }
 .wx-hero::before { display:none; }
 .wx-city { font-size: .75rem; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; color: var(--text2); margin-bottom: .3rem; }
 .wx-main { display: flex; align-items: center; gap: 1.5rem; margin-bottom: 1.2rem; flex-wrap: wrap; }
@@ -544,7 +640,7 @@ nav::after {
 .wx-feels { font-size: .82rem; color: var(--text2); margin-top: .25rem; }
 .wx-desc { font-size: 1.1rem; font-weight: 600; color: var(--text); margin-top: .2rem; }
 .wx-stats { display: grid; grid-template-columns: repeat(auto-fill,minmax(120px,1fr)); gap: .7rem; }
-.wx-stat { background: rgba(255,255,255,.7); border: 1px solid rgba(0,0,0,.06); border-radius: var(--radius-sm); padding: .7rem .9rem; }
+.wx-stat { background: var(--surface2); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: .7rem .9rem; }
 .wx-stat-lbl { font-size: .62rem; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: var(--text2); margin-bottom: .25rem; }
 .wx-stat-val { font-size: .95rem; color: var(--text); font-weight: 600; font-variant-numeric: tabular-nums; }
 .wx-stat-val span { font-size: .72rem; color: var(--muted); }
@@ -588,7 +684,7 @@ nav::after {
 .news-layout { display: grid; grid-template-columns: 1fr 300px; gap: 1.2rem; }
 @media(max-width:900px) { .news-layout { grid-template-columns: 1fr; } }
 .news-box { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; box-shadow: var(--shadow-sm); }
-.news-box-hdr { padding: .75rem 1rem; background: var(--accent); border-bottom: 1px solid var(--border); font-size: .76rem; font-weight: 800; color: #fff; letter-spacing: .08em; text-transform: uppercase; }
+.news-box-hdr { padding: .75rem 1rem; background: #e9f1ff; border-bottom: 1px solid var(--border); font-size: .76rem; font-weight: 800; color: var(--text); letter-spacing: .08em; text-transform: uppercase; }
 .news-item { padding: .9rem 1rem; border-bottom: 1px solid var(--border); cursor: pointer; transition: background .12s; display: flex; gap: .75rem; text-decoration: none; }
 .news-item:last-child { border-bottom: none; }
 .news-item:hover { background: var(--surface2); }
@@ -690,7 +786,7 @@ nav::after {
   padding: .85rem 1rem;
   font-size: .9rem;
   font-weight: 700;
-  background: #e9f1ff;
+  background: var(--surface2);
   border-bottom: 1px solid var(--border);
 }
 .sports-news-item {
@@ -747,8 +843,8 @@ nav::after {
 /* ── EMERGENCY ── */
 .em-note {
   margin-bottom: .9rem;
-  background: #eef4ff;
-  border: 1px solid rgba(0,57,166,.22);
+  background: var(--surface2);
+  border: 1px solid var(--border2);
   border-radius: var(--radius-sm);
   padding: .68rem .8rem;
   font-size: .78rem;
@@ -756,9 +852,9 @@ nav::after {
 }
 .em-grid { display: grid; grid-template-columns: repeat(auto-fit,minmax(230px,1fr)); gap: .8rem; }
 .em-card {
-  border: 1px solid rgba(0,57,166,.24);
+  border: 1px solid var(--border2);
   border-radius: var(--radius-sm);
-  background: #fffdf2;
+  background: var(--surface);
   box-shadow: var(--shadow-sm);
   padding: .8rem .85rem;
 }
@@ -872,7 +968,7 @@ nav::after {
   border-radius: var(--radius);
   overflow: hidden;
   box-shadow: var(--shadow-sm);
-  background: #f7f0cf;
+  background: var(--surface2);
 }
 #toilets-map {
   width: 100%;
@@ -908,7 +1004,7 @@ nav::after {
   border-radius: var(--radius);
   overflow: hidden;
   box-shadow: var(--shadow-sm);
-  background: #f7f0cf;
+  background: var(--surface2);
 }
 #places-map {
   width: 100%;
@@ -969,34 +1065,38 @@ nav::after {
 .r-play { width: 34px; height: 34px; border-radius: 50%; background: #ffd84f; border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: .85rem; transition: transform .15s, background .15s; flex-shrink: 0; color: #0b2560; font-weight: 900; box-shadow: 0 2px 8px rgba(0,0,0,.25); }
 .r-play:hover { transform: scale(1.08); background: #ffe785; }
 .r-vol { width: 70px; accent-color: #ffd84f; cursor: pointer; }
+.r-expand-toggle { display: none; }
 
 /* ── DARK MODE (gated behind html.dark class — toggled by the ☀️/🌙 button) ── */
 html.dark {
-  --bg: #08090d;
-  --bg2: #0d0f15;
-  --surface: #171922;
-  --surface2: #1f222d;
-  --surface3: #262a36;
-  --border: rgba(255,255,255,.14);
-  --border2: rgba(255,255,255,.22);
+  --bg: #101214;
+  --bg2: #16181b;
+  --surface: #1d2023;
+  --surface2: #24272b;
+  --surface3: #2b2f33;
+  --border: rgba(255,255,255,.11);
+  --border2: rgba(255,255,255,.20);
   --shadow-sm: 0 8px 28px rgba(0,0,0,.48);
   --shadow-md: 0 14px 34px rgba(0,0,0,.56);
   --shadow-lg: 0 20px 42px rgba(0,0,0,.62);
-  --accent: #ff4a4a;
-  --accent-light: rgba(255,74,74,.12);
-  --accent-hover: #ff2f3c;
-  --blue: #7ea7ff;
-  --blue-light: rgba(126,167,255,.14);
-  --teal: #93a3ba;
-  --green: #7bc57f;
-  --text: #f2f4fa;
-  --text2: #b9c2d3;
-  --muted: #8e99af;
+  --accent: #e6503f;
+  --accent-light: rgba(230,80,63,.14);
+  --accent-hover: #ff6a52;
+  --blue: #6fa8ff;
+  --blue-light: rgba(111,168,255,.14);
+  --teal: #55b88f;
+  --green: #55b878;
+  --text: #f1efe8;
+  --text2: #c7c9c3;
+  --muted: #989c96;
+  --go: #55b878;
+  --caution: #e6a23c;
+  --stop: #e6503f;
 }
 html.dark body {
   background:
-    radial-gradient(980px 560px at 28% 16%, rgba(255,78,78,.14), transparent 60%),
-    radial-gradient(900px 540px at 72% 8%, rgba(255,255,255,.08), transparent 62%),
+    radial-gradient(980px 560px at 28% 16%, rgba(230,80,63,.12), transparent 60%),
+    radial-gradient(900px 540px at 72% 8%, rgba(246,201,69,.07), transparent 62%),
     linear-gradient(180deg, #0b0d13 0%, #07090e 100%);
   color: var(--text);
 }
@@ -1039,6 +1139,32 @@ html.dark .logo-live {
   border-radius: 0;
   transform: none;
   box-shadow: none;
+  display: inline-flex;
+  align-items: baseline;
+}
+html.dark .logo-live > span {
+  display: inline-block;
+  transform: none;
+  background: linear-gradient(180deg, #ffffff 0%, #f5f8ff 45%, #d7deed 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  text-shadow: 0 0 18px rgba(255,255,255,.12);
+}
+html.dark .logo-live::before { display: none; }
+html.dark .live-badge { display: none; }
+html.dark .hstat-lbl { color: var(--muted); }
+html.dark .hstat-val { color: #eef2ff; }
+
+html.dark .lang-switch {
+  border-color: rgba(255,255,255,.2);
+  background: rgba(255,255,255,.06);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.06);
+}
+html.dark .lang-label { color: var(--text2); }
+html.dark .lang-select { color: #f2f4fa; }
+
+html.dark .audience-row {
   background: rgba(14,16,22,.88);
   border-bottom: 1px solid rgba(255,255,255,.12);
   backdrop-filter: blur(10px) saturate(120%);
@@ -1071,10 +1197,10 @@ html.dark .tab {
 html.dark .tab:hover { color: #fff; background: rgba(255,255,255,.1); border-color: rgba(255,255,255,.28); }
 html.dark .tab.active {
   color: #fff;
-  border-color: rgba(255,88,88,.75);
-  border-bottom-color: rgba(255,88,88,.75);
-  background: linear-gradient(180deg, #ff5e5e 0%, #d83344 100%);
-  box-shadow: 0 10px 24px rgba(255,76,76,.28), inset 0 1px 0 rgba(255,255,255,.25);
+  border-color: rgba(230,80,63,.75);
+  border-bottom-color: rgba(230,80,63,.75);
+  background: linear-gradient(180deg, var(--accent-hover) 0%, var(--accent) 100%);
+  box-shadow: 0 10px 24px rgba(230,80,63,.28), inset 0 1px 0 rgba(255,255,255,.25);
   transform: none;
 }
 
@@ -1094,7 +1220,7 @@ html.dark .panel.active {
 html.dark .panel.active::before {
   height: 2px;
   border-radius: 16px 16px 0 0;
-  background: linear-gradient(90deg, transparent 0%, rgba(255,84,84,.95) 28%, rgba(255,84,84,.95) 72%, transparent 100%);
+  background: linear-gradient(90deg, transparent 0%, rgba(230,80,63,.95) 28%, rgba(230,80,63,.95) 72%, transparent 100%);
 }
 html.dark .sec { color: #f2f4fa; }
 html.dark .sec::before { width: 10px; height: 10px; border-radius: 50%; background: var(--accent); box-shadow: none; }
@@ -1108,8 +1234,8 @@ html.dark .rest-search, html.dark .bway-search, html.dark .rest-link, html.dark 
 }
 html.dark .cam-search::placeholder, html.dark .rest-search::placeholder, html.dark .bway-search::placeholder { color: #a7b1c4; }
 html.dark .cf-btn.active, html.dark .mt-btn.active, html.dark .r-btn.active, html.dark .r-btn:hover {
-  background: linear-gradient(180deg, #ff5e5e 0%, #d83344 100%);
-  border-color: rgba(255,88,88,.82);
+  background: linear-gradient(180deg, var(--accent-hover) 0%, var(--accent) 100%);
+  border-color: rgba(230,80,63,.82);
   color: #fff;
 }
 
@@ -1137,11 +1263,11 @@ html.dark .r-name { color: #f3f6ff; }
 html.dark .r-desc { color: #bac4d7; }
 html.dark .r-btn { background: rgba(255,255,255,.06); border-color: rgba(255,255,255,.2); color: #e8edf8; }
 html.dark .r-play {
-  background: linear-gradient(180deg, #ff5e5e 0%, #d83344 100%);
+  background: linear-gradient(180deg, var(--accent-hover) 0%, var(--accent) 100%);
   color: #fff;
-  box-shadow: 0 8px 18px rgba(255,72,72,.34);
+  box-shadow: 0 8px 18px rgba(230,80,63,.34);
 }
-html.dark .r-vol { accent-color: #ff5d5d; }
+html.dark .r-vol { accent-color: var(--accent); }
 
 /* ── MTA SUBWAY STATUS ── */
 .subway-grid {
@@ -1175,16 +1301,11 @@ html.dark .r-vol { accent-color: #ff5d5d; }
 .subway-info { min-width: 0; }
 .subway-line-name { font-size: .8rem; font-weight: 700; color: var(--text); white-space: nowrap; }
 .subway-status { font-size: .67rem; font-weight: 600; margin-top: 2px; white-space: nowrap; }
-.subway-status.good  { color: #11773a; }
-.subway-status.delay { color: #c45800; }
-.subway-status.change { color: var(--accent); }
-.subway-status.suspended { color: #cc0000; }
+.subway-status.good  { color: var(--go); }
+.subway-status.delay { color: var(--caution); }
+.subway-status.change { color: var(--blue); }
+.subway-status.suspended { color: var(--stop); }
 .subway-status.work  { color: var(--muted); }
-html.dark .subway-status.good  { color: #6dd68a; }
-html.dark .subway-status.delay { color: #ffb347; }
-html.dark .subway-status.change { color: #7ea7ff; }
-html.dark .subway-status.suspended { color: #ff6b6b; }
-html.dark .subway-status.work  { color: var(--muted); }
 .subway-loading { display: flex; align-items: center; gap: .6rem; color: var(--text2); font-size: .85rem; padding: .5rem 0; }
 
 /* ── DARK MODE TOGGLE BUTTON ── */
@@ -1207,7 +1328,8 @@ html.dark .dark-btn:hover { background: rgba(255,255,255,.18); }
 /* ── RESPONSIVE ── */
 @media(max-width:640px) {
   .panel { padding: 1rem; padding-bottom: 72px; }
-  header { padding: 0 1rem; }
+  header { padding: .5rem 1rem; flex-wrap: wrap; row-gap: .4rem; }
+  .header-right { gap: .5rem; }
   .audience-row { padding: .32rem .6rem; }
   .aud-lbl { display: none; }
   .audience-switch { justify-content: center; }
@@ -1252,6 +1374,15 @@ html.dark .dark-btn:hover { background: rgba(255,255,255,.18); }
   }
   .r-vol { display: none; }
   .r-play { margin-left: auto; width: 32px; height: 32px; }
+  .r-expand-toggle {
+    display: flex; align-items: center; justify-content: center;
+    width: 26px; height: 26px; border-radius: 50%; flex-shrink: 0;
+    background: rgba(255,255,255,.12); border: 1px solid rgba(255,255,255,.35);
+    color: #eaf1ff; font-size: .7rem; cursor: pointer; transition: transform .2s;
+  }
+  #radio-bar.r-expanded .r-expand-toggle { transform: rotate(180deg); }
+  #radio-bar:not(.r-expanded) .r-btn { display: none; }
+  #radio-bar:not(.r-expanded) .r-controls { width: auto; }
   .tracker-grid { grid-template-columns: 1fr; }
   .news-layout { grid-template-columns: 1fr; }
   .sports-board-grid { grid-template-columns: 1fr; }
@@ -1434,14 +1565,36 @@ html.dark .more-drawer-sheet {
 
 /* ── TODAY PANEL ── */
 .today-hero {
-  background: var(--accent);
+  background: linear-gradient(135deg, #0039a6 0%, #0055d4 100%);
   border-radius: var(--radius);
   padding: 1.4rem 1.3rem 1.3rem;
   color: #fff;
   margin-bottom: 1rem;
   position: relative;
   overflow: hidden;
-  box-shadow: var(--shadow-sm);
+  box-shadow: var(--shadow-md);
+}
+html.dark .today-hero {
+  background: linear-gradient(135deg, rgba(180,40,40,.35) 0%, rgba(16,18,28,1) 65%);
+  border: 1px solid rgba(255,255,255,.12);
+}
+.today-hero::before {
+  content: '';
+  position: absolute;
+  right: -40px; top: -40px;
+  width: 200px; height: 200px;
+  border-radius: 50%;
+  background: rgba(255,255,255,.07);
+  pointer-events: none;
+}
+.today-hero::after {
+  content: '';
+  position: absolute;
+  right: 60px; bottom: -60px;
+  width: 140px; height: 140px;
+  border-radius: 50%;
+  background: rgba(255,255,255,.04);
+  pointer-events: none;
 }
 .today-greeting {
   font-size: .7rem;
@@ -1485,7 +1638,7 @@ html.dark .more-drawer-sheet {
 .today-card {
   background: var(--surface);
   border: 1px solid var(--border);
-  border-top: 6px solid var(--border2);
+  border-left: 3px solid var(--border2);
   border-radius: var(--radius);
   padding: .95rem 1rem;
   box-shadow: var(--shadow-sm);
@@ -1513,9 +1666,9 @@ html.dark .more-drawer-sheet {
   margin-top: .2rem;
   line-height: 1.4;
 }
-.today-card-ok  { border-top-color: var(--green); }
-.today-card-warn { border-top-color: #c45800; }
-.today-card-info { border-top-color: var(--accent); }
+.today-card-ok  { border-left-color: var(--go); }
+.today-card-warn { border-left-color: var(--caution); }
+.today-card-info { border-left-color: var(--accent); }
 
 .today-news-section { margin-bottom: 1rem; }
 .today-news-item {
@@ -1550,7 +1703,7 @@ html.dark .more-drawer-sheet {
   padding: .8rem .4rem;
   background: var(--surface);
   border: 1px solid var(--border);
-  border-radius: var(--radius);
+  border-radius: var(--radius-sm);
   text-decoration: none;
   transition: background .12s, transform .1s;
   -webkit-tap-highlight-color: transparent;
@@ -1579,6 +1732,18 @@ html.dark .more-drawer-sheet {
   flex-wrap: nowrap;
 }
 .borough-row::-webkit-scrollbar { display: none; }
+/* Fade-out hint at the right edge so users know there are more boroughs */
+.borough-row::after {
+  content: '';
+  position: sticky;
+  right: 0;
+  min-width: 32px;
+  flex-shrink: 0;
+  background: linear-gradient(to right, transparent, var(--surface2) 85%);
+  pointer-events: none;
+  align-self: stretch;
+}
+html.dark .borough-row::after { background: linear-gradient(to right, transparent, rgba(14,16,22,.88) 85%); }
 html.dark .borough-row {
   background: rgba(14,16,22,.88);
   border-bottom: 1px solid rgba(255,255,255,.1);
@@ -1609,7 +1774,6 @@ html.dark .borough-row {
 }
 .bor-btn:hover { background: var(--surface); }
 .bor-btn.active { background: var(--accent); color: #fff; border-color: var(--accent); }
-html.dark .bor-btn.active { background: #ff4a4a; border-color: #ff4a4a; }
 @media (max-width: 640px) {
   .borough-row { padding: .38rem .7rem; }
   .borough-lbl { display: none; }
@@ -1711,7 +1875,7 @@ html.dark .onboarding-sheet { background: #1a1c26; }
   .sec { font-size: 1.05rem; }
   .aud-btn { font-size: .74rem; padding: 7px 13px; }
   .bor-btn { font-size: .74rem; padding: 6px 13px; }
-  header { padding: 0 .9rem; height: 60px; }
+  header { padding: 0 .9rem; min-height: 60px; }
   .logo-nyc { font-size: 1.6rem; }
   .logo-live { font-size: 1.6rem; height: 1.6rem; }
 }
@@ -1729,17 +1893,18 @@ html.dark .onboarding-sheet { background: #1a1c26; }
     <div class="hstat"><span class="hstat-lbl" data-i18n="date">Date</span><span class="hstat-val" id="dateval">---</span></div>
     <div class="hstat"><span class="hstat-lbl" data-i18n="temp">Temp</span><span class="hstat-val" id="header-temp">--°F</span></div>
   </div>
-  <div class="lang-switch">
-    <label class="lang-label" for="lang-select" data-i18n="language">Language</label>
-    <select class="lang-select" id="lang-select" onchange="setLanguage(this.value)">
-      <option value="en">English</option>
-      <option value="pt-BR">Portuguese (Brazil)</option>
-      <option value="es">Español</option>
-      <option value="fr">Français</option>
-      <option value="pl">Polski</option>
-    </select>
+  <div class="header-right">
+    <div class="lang-switch">
+      <label class="lang-label" for="lang-select" data-i18n="language">Language</label>
+      <select class="lang-select" id="lang-select" onchange="setLanguage(this.value)">
+        <option value="en">English</option>
+        <option value="pt-BR">Portuguese (Brazil)</option>
+        <option value="es">Español</option>
+        <option value="fr">Français</option>
+        <option value="pl">Polski</option>
+      </select>
+    </div>
   </div>
-  <button id="dark-toggle" class="dark-btn" onclick="toggleDark()" title="Toggle dark / light mode" aria-label="Toggle dark mode">🌙</button>
 </header>
 
 <section class="audience-row">
@@ -1763,20 +1928,20 @@ html.dark .onboarding-sheet { background: #1a1c26; }
 
 <!-- NAV -->
 <nav class="top-nav">
-  <div class="tab" data-panel="weather" onclick="showPanel('weather',this)" data-i18n="tab_weather">🌤 Weather</div>
-  <div class="tab" data-panel="traffic" onclick="showPanel('traffic',this)" data-i18n="tab_traffic">🚦 Traffic</div>
-  <div class="tab active" data-panel="cams" onclick="showPanel('cams',this)" data-i18n="tab_cams">📹 Live Cameras</div>
-  <div class="tab" data-panel="news" onclick="showPanel('news',this)" data-i18n="tab_news">📰 News</div>
-  <div class="tab" data-panel="emergency" onclick="showPanel('emergency',this)" data-i18n="tab_emergency">🚨 Emergency</div>
-  <div class="tab" data-panel="flights" onclick="showPanel('flights',this)" data-i18n="tab_flights">✈️ Flights & Marine</div>
-  <div class="tab" data-panel="stocks" onclick="showPanel('stocks',this)" data-i18n="tab_stocks">📈 Stock Market</div>
-  <div class="tab" data-panel="sports" onclick="showPanel('sports',this)" data-i18n="tab_sports">🏆 Sports</div>
-  <div class="tab" data-panel="restaurants" data-audience="tourists-only" onclick="showPanel('restaurants',this)" data-i18n="tab_restaurants">🍽 Classic Restaurants</div>
-  <div class="tab" data-panel="broadway" data-audience="tourists-only" onclick="showPanel('broadway',this)" data-i18n="tab_broadway">🎭 Broadway Shows</div>
-  <div class="tab" data-panel="toilets" onclick="showPanel('toilets',this)" data-i18n="tab_toilets">🚻 Public Toilets</div>
-  <div class="tab" data-panel="holidays" onclick="showPanel('holidays',this)" data-i18n="tab_holidays">🗓 Holidays</div>
-  <div class="tab" data-panel="places" data-audience="tourists-only" onclick="showPanel('places',this)" data-i18n="tab_places_wevebeen">📍 Places we've been</div>
-  <div class="tab" data-panel="latenight" data-audience="tourists-only" onclick="showPanel('latenight',this)" data-i18n="tab_latenight">🎟 Late Night Participation</div>
+  <div class="tab" data-panel="weather" onclick="showPanel('weather',this)"><span class="nav-bullet" style="background:#1f5fa8">W</span><span data-i18n="tab_weather">Weather</span></div>
+  <div class="tab" data-panel="traffic" onclick="showPanel('traffic',this)"><span class="nav-bullet" style="background:#ff6319">T</span><span data-i18n="tab_traffic">Traffic</span></div>
+  <div class="tab active" data-panel="cams" onclick="showPanel('cams',this)"><span class="nav-bullet" style="background:#b933ad">C</span><span data-i18n="tab_cams">Live Cameras</span></div>
+  <div class="tab" data-panel="news" onclick="showPanel('news',this)"><span class="nav-bullet" style="background:#3f8f2b">N</span><span data-i18n="tab_news">News</span></div>
+  <div class="tab" data-panel="emergency" onclick="showPanel('emergency',this)"><span class="nav-bullet" style="background:#ee352e">!</span><span data-i18n="tab_emergency">Emergency</span></div>
+  <div class="tab" data-panel="flights" onclick="showPanel('flights',this)"><span class="nav-bullet" style="background:#0039a6">F</span><span data-i18n="tab_flights">Flights & Marine</span></div>
+  <div class="tab" data-panel="stocks" onclick="showPanel('stocks',this)"><span class="nav-bullet nav-bullet--ink" style="background:#fccc0a">$</span><span data-i18n="tab_stocks">Stock Market</span></div>
+  <div class="tab" data-panel="sports" onclick="showPanel('sports',this)"><span class="nav-bullet" style="background:#00933c">S</span><span data-i18n="tab_sports">Sports</span></div>
+  <div class="tab" data-panel="restaurants" data-audience="tourists-only" onclick="showPanel('restaurants',this)"><span class="nav-bullet" style="background:#996633">R</span><span data-i18n="tab_restaurants">Classic Restaurants</span></div>
+  <div class="tab" data-panel="broadway" data-audience="tourists-only" onclick="showPanel('broadway',this)"><span class="nav-bullet nav-bullet--ink" style="background:#a7a9ac">B</span><span data-i18n="tab_broadway">Broadway Shows</span></div>
+  <div class="tab" data-panel="toilets" onclick="showPanel('toilets',this)"><span class="nav-bullet" style="background:#6d6f72">T</span><span data-i18n="tab_toilets">Public Toilets</span></div>
+  <div class="tab" data-panel="holidays" onclick="showPanel('holidays',this)"><span class="nav-bullet nav-bullet--ink" style="background:#fccc0a">H</span><span data-i18n="tab_holidays">Holidays</span></div>
+  <div class="tab" data-panel="places" data-audience="tourists-only" onclick="showPanel('places',this)"><span class="nav-bullet" style="background:#b933ad">P</span><span data-i18n="tab_places_wevebeen">Places we've been</span></div>
+  <div class="tab" data-panel="latenight" data-audience="tourists-only" onclick="showPanel('latenight',this)"><span class="nav-bullet" style="background:#ee352e">L</span><span data-i18n="tab_latenight">Late Night Participation</span></div>
 </nav>
 
 <section class="dashboard-brief">
@@ -2024,7 +2189,7 @@ html.dark .onboarding-sheet { background: #1a1c26; }
       <iframe
         src="https://www.vesselfinder.com/aismap?lat=40.65&lon=-74.05&zoom=11&width=100%25&height=500&names=true&mmsi=&track=false&fleet=false&fleet_name=false&fleet_hide_old_positions=false&clickable=true&show_track=false&default_icon=false&lan=en&embed=1"
         height="500" allowfullscreen loading="lazy"
-        style="background:#f0f4ff"></iframe>
+        style="background:var(--surface)"></iframe>
       <div style="padding:.45rem .8rem;font-size:.7rem;color:var(--muted)">NY Harbor · Hudson River · East River — live vessel positions</div>
     </div>
   </div>
@@ -2078,7 +2243,7 @@ html.dark .onboarding-sheet { background: #1a1c26; }
   <div id="wx-links" style="margin-top:1.5rem;display:flex;gap:.7rem;flex-wrap:wrap">
     <a href="https://radar.weather.gov/station/KOKX/standard" target="_blank" class="ext-btn ext-teal">📡 Live NWS Radar ↗</a>
     <a href="https://forecast.weather.gov/MapClick.php?CityName=New+York+City&state=NY&site=OKX" target="_blank" class="ext-btn ext-gold">📋 NWS Full Forecast ↗</a>
-    <a href="https://www.nhc.noaa.gov/" target="_blank" class="ext-btn" style="background:#fff5f5;border:1px solid rgba(0,57,166,.18);color:var(--accent)">🌀 NOAA Tropical ↗</a>
+    <a href="https://www.nhc.noaa.gov/" target="_blank" class="ext-btn ext-gold">🌀 NOAA Tropical ↗</a>
   </div>
 </div>
 
@@ -2342,6 +2507,7 @@ html.dark .onboarding-sheet { background: #1a1c26; }
     <div class="r-desc" id="r-desc">New York Public Radio</div>
   </div>
   <div class="r-controls">
+    <button class="r-expand-toggle" id="r-expand-toggle" onclick="toggleRadioExpanded()" aria-label="Show station options" title="Show station options">▾</button>
     <button class="r-btn active" onclick="setStation(0,this)">WNYC 93.9</button>
     <button class="r-btn" onclick="setStation(1,this)">WQXR Classical</button>
     <button class="r-btn" onclick="setStation(2,this)">WBBR 1130</button>
@@ -2357,23 +2523,23 @@ html.dark .onboarding-sheet { background: #1a1c26; }
 ═══════════════════════════════ -->
 <nav class="bottom-nav" id="bottom-nav" aria-label="Main navigation">
   <button class="bn-item active" data-panel="today" onclick="showPanel('today',this)">
-    <span class="bn-icon">🏠</span>
+    <span class="bn-icon"><span class="nav-bullet nav-bullet--ink" style="background:#fccc0a">•</span></span>
     <span class="bn-label">Today</span>
   </button>
   <button class="bn-item" data-panel="weather" onclick="showPanel('weather',this)">
-    <span class="bn-icon">🌤</span>
+    <span class="bn-icon"><span class="nav-bullet" style="background:#1f5fa8">W</span></span>
     <span class="bn-label">Weather</span>
   </button>
   <button class="bn-item" data-panel="traffic" onclick="showPanel('traffic',this)">
-    <span class="bn-icon">🚦</span>
+    <span class="bn-icon"><span class="nav-bullet" style="background:#ff6319">T</span></span>
     <span class="bn-label">Traffic</span>
   </button>
   <button class="bn-item" data-panel="cams" onclick="showPanel('cams',this)">
-    <span class="bn-icon">📹</span>
+    <span class="bn-icon"><span class="nav-bullet" style="background:#b933ad">C</span></span>
     <span class="bn-label">Cams</span>
   </button>
   <button class="bn-item" id="bn-more" onclick="openMoreDrawer()">
-    <span class="bn-icon">••• </span>
+    <span class="bn-icon"><span class="nav-bullet" style="background:#6d6f72">&hellip;</span></span>
     <span class="bn-label">More</span>
   </button>
 </nav>
@@ -2387,17 +2553,17 @@ html.dark .onboarding-sheet { background: #1a1c26; }
     <div class="more-drawer-handle"></div>
     <div class="more-drawer-title">All Sections</div>
     <div class="more-drawer-grid">
-      <button class="more-item" onclick="showPanel('news',null);closeMoreDrawer()"><span class="more-icon">📰</span><span class="more-label">News</span></button>
-      <button class="more-item" onclick="showPanel('sports',null);closeMoreDrawer()"><span class="more-icon">🏆</span><span class="more-label">Sports</span></button>
-      <button class="more-item" onclick="showPanel('stocks',null);closeMoreDrawer()"><span class="more-icon">📈</span><span class="more-label">Stocks</span></button>
-      <button class="more-item" onclick="showPanel('emergency',null);closeMoreDrawer()"><span class="more-icon">🚨</span><span class="more-label">Emergency</span></button>
-      <button class="more-item" onclick="showPanel('flights',null);closeMoreDrawer()"><span class="more-icon">✈️</span><span class="more-label">Flights</span></button>
-      <button class="more-item" onclick="showPanel('toilets',null);closeMoreDrawer()"><span class="more-icon">🚻</span><span class="more-label">Toilets</span></button>
-      <button class="more-item" onclick="showPanel('holidays',null);closeMoreDrawer()"><span class="more-icon">🗓</span><span class="more-label">Holidays</span></button>
-      <button class="more-item" onclick="showPanel('restaurants',null);closeMoreDrawer()"><span class="more-icon">🍽</span><span class="more-label">Restaurants</span></button>
-      <button class="more-item" onclick="showPanel('broadway',null);closeMoreDrawer()"><span class="more-icon">🎭</span><span class="more-label">Broadway</span></button>
-      <button class="more-item" onclick="showPanel('latenight',null);closeMoreDrawer()"><span class="more-icon">🎟</span><span class="more-label">Late Night</span></button>
-      <button class="more-item" onclick="showPanel('places',null);closeMoreDrawer()"><span class="more-icon">📍</span><span class="more-label">Places</span></button>
+      <button class="more-item" onclick="showPanel('news',null);closeMoreDrawer()"><span class="more-icon nav-bullet" style="background:#3f8f2b">N</span><span class="more-label">News</span></button>
+      <button class="more-item" onclick="showPanel('sports',null);closeMoreDrawer()"><span class="more-icon nav-bullet" style="background:#00933c">S</span><span class="more-label">Sports</span></button>
+      <button class="more-item" onclick="showPanel('stocks',null);closeMoreDrawer()"><span class="more-icon nav-bullet nav-bullet--ink" style="background:#fccc0a">$</span><span class="more-label">Stocks</span></button>
+      <button class="more-item" onclick="showPanel('emergency',null);closeMoreDrawer()"><span class="more-icon nav-bullet" style="background:#ee352e">!</span><span class="more-label">Emergency</span></button>
+      <button class="more-item" onclick="showPanel('flights',null);closeMoreDrawer()"><span class="more-icon nav-bullet" style="background:#0039a6">F</span><span class="more-label">Flights</span></button>
+      <button class="more-item" onclick="showPanel('toilets',null);closeMoreDrawer()"><span class="more-icon nav-bullet" style="background:#6d6f72">T</span><span class="more-label">Toilets</span></button>
+      <button class="more-item" onclick="showPanel('holidays',null);closeMoreDrawer()"><span class="more-icon nav-bullet nav-bullet--ink" style="background:#fccc0a">H</span><span class="more-label">Holidays</span></button>
+      <button class="more-item" onclick="showPanel('restaurants',null);closeMoreDrawer()"><span class="more-icon nav-bullet" style="background:#996633">R</span><span class="more-label">Restaurants</span></button>
+      <button class="more-item" onclick="showPanel('broadway',null);closeMoreDrawer()"><span class="more-icon nav-bullet nav-bullet--ink" style="background:#a7a9ac">B</span><span class="more-label">Broadway</span></button>
+      <button class="more-item" onclick="showPanel('latenight',null);closeMoreDrawer()"><span class="more-icon nav-bullet" style="background:#ee352e">L</span><span class="more-label">Late Night</span></button>
+      <button class="more-item" onclick="showPanel('places',null);closeMoreDrawer()"><span class="more-icon nav-bullet" style="background:#b933ad">P</span><span class="more-label">Places</span></button>
     </div>
   </div>
 </div>
@@ -2447,20 +2613,20 @@ const I18N = {
     date: 'Date',
     temp: 'Temp',
     language: 'Language',
-    tab_cams: '📹 Live Cameras',
-    tab_traffic: '🚦 Traffic',
-    tab_flights: '✈️ Flights & Marine',
-    tab_weather: '🌤 Weather',
-    tab_news: '📰 News',
-    tab_holidays: '🗓 Holidays',
-    tab_emergency: '🚨 Emergency',
-    tab_toilets: '🚻 Public Toilets',
-    tab_sports: '🏆 Sports',
-    tab_stocks: '📈 Stock Market',
-    tab_restaurants: '🍽 Classic Restaurants',
-    tab_broadway: '🎭 Broadway Shows',
-    tab_latenight: '🎟 Late Night Participation',
-    tab_places_wevebeen: '📍 Places we\'ve been',
+    tab_cams: 'Live Cameras',
+    tab_traffic: 'Traffic',
+    tab_flights: 'Flights & Marine',
+    tab_weather: 'Weather',
+    tab_news: 'News',
+    tab_holidays: 'Holidays',
+    tab_emergency: 'Emergency',
+    tab_toilets: 'Public Toilets',
+    tab_sports: 'Sports',
+    tab_stocks: 'Stock Market',
+    tab_restaurants: 'Classic Restaurants',
+    tab_broadway: 'Broadway Shows',
+    tab_latenight: 'Late Night Participation',
+    tab_places_wevebeen: 'Places we\'ve been',
     audience_label: 'Audience',
     audience_residents: 'NYC Residents',
     audience_tourists: 'NYC Tourists',
@@ -2516,20 +2682,20 @@ const I18N = {
     date: 'Data',
     temp: 'Temp.',
     language: 'Idioma',
-    tab_cams: '📹 Câmeras',
-    tab_traffic: '🚦 Trânsito',
-    tab_flights: '✈️ Voos e Marítimo',
-    tab_weather: '🌤 Clima',
-    tab_news: '📰 Notícias',
-    tab_holidays: '🗓 Feriados',
-    tab_emergency: '🚨 Emergência',
-    tab_toilets: '🚻 Banheiros Públicos',
-    tab_sports: '🏆 Esportes',
-    tab_stocks: '📈 Mercado de Ações',
-    tab_restaurants: '🍽 Restaurantes Clássicos',
-    tab_broadway: '🎭 Musicais da Broadway',
-    tab_latenight: '🎟 Participação em Programas Noturnos',
-    tab_places_wevebeen: '📍 Lugares que visitamos',
+    tab_cams: 'Câmeras',
+    tab_traffic: 'Trânsito',
+    tab_flights: 'Voos e Marítimo',
+    tab_weather: 'Clima',
+    tab_news: 'Notícias',
+    tab_holidays: 'Feriados',
+    tab_emergency: 'Emergência',
+    tab_toilets: 'Banheiros Públicos',
+    tab_sports: 'Esportes',
+    tab_stocks: 'Mercado de Ações',
+    tab_restaurants: 'Restaurantes Clássicos',
+    tab_broadway: 'Musicais da Broadway',
+    tab_latenight: 'Participação em Programas Noturnos',
+    tab_places_wevebeen: 'Lugares que visitamos',
     audience_label: 'Público',
     audience_residents: 'Moradores de NYC',
     audience_tourists: 'Turistas de NYC',
@@ -2585,20 +2751,20 @@ const I18N = {
     date: 'Fecha',
     temp: 'Temp.',
     language: 'Idioma',
-    tab_cams: '📹 Cámaras',
-    tab_traffic: '🚦 Tráfico',
-    tab_flights: '✈️ Vuelos y Marítimo',
-    tab_weather: '🌤 Clima',
-    tab_news: '📰 Noticias',
-    tab_holidays: '🗓 Festivos',
-    tab_emergency: '🚨 Emergencia',
-    tab_toilets: '🚻 Baños Públicos',
-    tab_sports: '🏆 Deportes',
-    tab_stocks: '📈 Mercado Bursátil',
-    tab_restaurants: '🍽 Restaurantes Clásicos',
-    tab_broadway: '🎭 Broadway',
-    tab_latenight: '🎟 Participación en Programas Nocturnos',
-    tab_places_wevebeen: '📍 Lugares que hemos visitado',
+    tab_cams: 'Cámaras',
+    tab_traffic: 'Tráfico',
+    tab_flights: 'Vuelos y Marítimo',
+    tab_weather: 'Clima',
+    tab_news: 'Noticias',
+    tab_holidays: 'Festivos',
+    tab_emergency: 'Emergencia',
+    tab_toilets: 'Baños Públicos',
+    tab_sports: 'Deportes',
+    tab_stocks: 'Mercado Bursátil',
+    tab_restaurants: 'Restaurantes Clásicos',
+    tab_broadway: 'Broadway',
+    tab_latenight: 'Participación en Programas Nocturnos',
+    tab_places_wevebeen: 'Lugares que hemos visitado',
     audience_label: 'Público',
     audience_residents: 'Residentes de NYC',
     audience_tourists: 'Turistas de NYC',
@@ -2654,20 +2820,20 @@ const I18N = {
     date: 'Date',
     temp: 'Temp.',
     language: 'Langue',
-    tab_cams: '📹 Caméras',
-    tab_traffic: '🚦 Trafic',
-    tab_flights: '✈️ Vols et Maritime',
-    tab_weather: '🌤 Météo',
-    tab_news: '📰 Actualités',
-    tab_holidays: '🗓 Jours fériés',
-    tab_emergency: '🚨 Urgence',
-    tab_toilets: '🚻 Toilettes Publiques',
-    tab_sports: '🏆 Sports',
-    tab_stocks: '📈 Marché Boursier',
-    tab_restaurants: '🍽 Restaurants Classiques',
-    tab_broadway: '🎭 Broadway',
-    tab_latenight: '🎟 Participation aux Emissions Nocturnes',
-    tab_places_wevebeen: '📍 Endroits ou nous sommes alles',
+    tab_cams: 'Caméras',
+    tab_traffic: 'Trafic',
+    tab_flights: 'Vols et Maritime',
+    tab_weather: 'Météo',
+    tab_news: 'Actualités',
+    tab_holidays: 'Jours fériés',
+    tab_emergency: 'Urgence',
+    tab_toilets: 'Toilettes Publiques',
+    tab_sports: 'Sports',
+    tab_stocks: 'Marché Boursier',
+    tab_restaurants: 'Restaurants Classiques',
+    tab_broadway: 'Broadway',
+    tab_latenight: 'Participation aux Emissions Nocturnes',
+    tab_places_wevebeen: 'Endroits ou nous sommes alles',
     audience_label: 'Public',
     audience_residents: 'Résidents de NYC',
     audience_tourists: 'Touristes de NYC',
@@ -2723,20 +2889,20 @@ const I18N = {
     date: 'Data',
     temp: 'Temp.',
     language: 'Język',
-    tab_cams: '📹 Kamery na żywo',
-    tab_traffic: '🚦 Ruch drogowy',
-    tab_flights: '✈️ Loty i Statki',
-    tab_weather: '🌤 Pogoda',
-    tab_news: '📰 Wiadomości',
-    tab_holidays: '🗓 Święta',
-    tab_emergency: '🚨 Numer alarmowy',
-    tab_toilets: '🚻 Publiczne toalety',
-    tab_sports: '🏆 Sport',
-    tab_stocks: '📈 Giełda',
-    tab_restaurants: '🍽 Klasyczne restauracje',
-    tab_broadway: '🎭 Spektakle Broadway',
-    tab_latenight: '🎟 Udział w programach nocnych',
-    tab_places_wevebeen: '📍 Miejsca, w których byliśmy',
+    tab_cams: 'Kamery na żywo',
+    tab_traffic: 'Ruch drogowy',
+    tab_flights: 'Loty i Statki',
+    tab_weather: 'Pogoda',
+    tab_news: 'Wiadomości',
+    tab_holidays: 'Święta',
+    tab_emergency: 'Numer alarmowy',
+    tab_toilets: 'Publiczne toalety',
+    tab_sports: 'Sport',
+    tab_stocks: 'Giełda',
+    tab_restaurants: 'Klasyczne restauracje',
+    tab_broadway: 'Spektakle Broadway',
+    tab_latenight: 'Udział w programach nocnych',
+    tab_places_wevebeen: 'Miejsca, w których byliśmy',
     audience_label: 'Odbiorcy',
     audience_residents: 'Mieszkańcy NYC',
     audience_tourists: 'Turyści NYC',
@@ -2789,26 +2955,8 @@ const I18N = {
   }
 };
 
-/* ── DARK MODE TOGGLE (follows system preference on first visit) ── */
-(function() {
-  const saved = localStorage.getItem('nyclive:dark');
-  let isDark;
-  if (saved !== null) {
-    isDark = saved === 'true';
-  } else {
-    isDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
-  }
-  if (isDark) document.documentElement.classList.add('dark');
-  const btn = document.getElementById('dark-toggle');
-  if (btn) btn.textContent = isDark ? '☀️' : '🌙';
-})();
-
-function toggleDark() {
-  const isDark = document.documentElement.classList.toggle('dark');
-  localStorage.setItem('nyclive:dark', isDark);
-  const btn = document.getElementById('dark-toggle');
-  if (btn) btn.textContent = isDark ? '☀️' : '🌙';
-}
+/* ── SIGNAL BOARD: permanently dark, like a real countdown clock or DOT sign ── */
+document.documentElement.classList.add('dark');
 
 const LOCALES = { en:'en-US', 'pt-BR':'pt-BR', es:'es-ES', fr:'fr-FR', pl:'pl-PL' };
 const LANG_STORAGE_KEY = 'nyclive:lang';
@@ -3240,82 +3388,6 @@ function setCamFilter(filter, btn) {
 buildEarthcamGrid();
 
 /* ── TRAFFIC MAP SWITCHER ── */
-/* REMOVED: embedded camera overlay — reverting to direct links */
-
-function openCamEmbed(idx) {
-  const cam = EARTHCAMS[idx];
-  const overlay  = document.getElementById('cam-overlay');
-  const player   = document.getElementById('cam-overlay-player');
-  const titleEl  = document.getElementById('cam-overlay-title');
-  const sourceEl = document.getElementById('cam-overlay-source');
-  const extEl    = document.getElementById('cam-overlay-ext');
-
-  // Tear down any previous session
-  player.innerHTML = '';
-  if (_camRefreshTimer) { clearInterval(_camRefreshTimer); _camRefreshTimer = null; }
-
-  titleEl.textContent = cam.icon + '  ' + cam.name + ' — ' + cam.loc;
-  extEl.href = cam.url;
-  overlay.classList.add('open');
-  document.body.style.overflow = 'hidden';
-
-  if (cam.ytId) {
-    sourceEl.textContent = '📺 YouTube Live (EarthCam official stream)';
-    player.innerHTML =
-      '<iframe src="https://www.youtube-nocookie.com/embed/' + cam.ytId +
-      '?autoplay=1&mute=0&rel=0&modestbranding=1&playsinline=1" ' +
-      'allow="autoplay; fullscreen; picture-in-picture" allowfullscreen ' +
-      'sandbox="allow-autoplay allow-fullscreen allow-picture-in-picture allow-same-origin allow-scripts"></iframe>';
-  } else {
-    sourceEl.textContent = '📡 NYC DOT Live Camera — refreshes every 10 s';
-    player.innerHTML = '<div style="display:flex;align-items:center;justify-content:center;height:100%;color:#ccc;font-size:.85rem;gap:.6rem"><span style="animation:spin 1s linear infinite;display:inline-block">⏳</span> Finding nearest NYC DOT camera…</div>';
-    _loadDotCam(cam, player);
-  }
-}
-
-async function _loadDotCam(cam, player) {
-  try {
-    if (!_dotCamCache) {
-      const res = await fetch('/api/cameras');
-      if (!res.ok) throw new Error('api_' + res.status);
-      _dotCamCache = await res.json();
-    }
-    const list = Array.isArray(_dotCamCache)
-      ? _dotCamCache
-      : (_dotCamCache.cameras || _dotCamCache.data || []);
-    const online = list.filter(c => c.isOnline !== false);
-    let nearest = null, minDist = Infinity;
-    for (const c of online) {
-      const lat = c.latitude || c.lat;
-      const lng = c.longitude || c.lng || c.lon;
-      if (!lat || !lng) continue;
-      const d = (lat - cam.lat) ** 2 + (lng - cam.lng) ** 2;
-      if (d < minDist) { minDist = d; nearest = c; }
-    }
-    if (!nearest) throw new Error('no_camera_nearby');
-    const imgUrl = nearest.imageUrl ||
-      ('https://webcams.nyctmc.org/api/cameras/' + nearest.id + '/image');
-    const img = document.createElement('img');
-    img.alt = cam.name + ' live camera';
-    img.style.cssText = 'width:100%;height:100%;object-fit:cover;display:block';
-    img.onerror = () => { img.src = imgUrl + '?t=' + Date.now(); };
-    img.src = imgUrl + '?t=' + Date.now();
-    player.innerHTML = '';
-    player.appendChild(img);
-    _camRefreshTimer = setInterval(() => { img.src = imgUrl + '?t=' + Date.now(); }, 10000);
-  } catch (e) {
-    player.innerHTML =
-      '<div style="display:flex;flex-direction:column;align-items:center;justify-content:center;height:100%;color:#fff;gap:1rem;padding:1.5rem;text-align:center">' +
-        '<div style="font-size:3rem">' + EARTHCAMS.find(c=>c.name===player.closest?.()??' ').icon + '</div>' +
-        '<div style="font-weight:700;font-size:1rem">Live stream unavailable here</div>' +
-        '<div style="font-size:.8rem;opacity:.55">NYC DOT doesn\'t have a camera at this exact spot.</div>' +
-        '<a href="' + (EARTHCAMS.find((c,i)=>i===Number(document.getElementById('cam-overlay-title').dataset.idx)||false)||{url:'#'}).url + '" ' +
-        'target="_blank" style="background:#ffd84f;color:#002a86;padding:.65rem 1.6rem;border-radius:999px;font-weight:700;text-decoration:none;font-size:.9rem">Watch on EarthCam ↗</a>' +
-      '</div>';
-  }
-}
-
-/* ── TRAFFIC MAP SWITCHER ── */
 const MAPS={
   osm:'https://www.openstreetmap.org/export/embed.html?bbox=-74.26,40.47,-73.70,40.92&layer=transportmap',
   osm2:'https://www.openstreetmap.org/export/embed.html?bbox=-74.10,40.60,-73.85,40.85&layer=cyclemap',
@@ -3437,6 +3509,8 @@ function renderWeather(d){
   // Stats grid
   const vis=cur.visibility!==null?`${(cur.visibility/1609.34).toFixed(1)} mi`:'N/A';
   const stats=[
+    {l:'High',v:`${toF(daily.temperature_2m_max[0])}°F`},
+    {l:'Low',v:`${toF(daily.temperature_2m_min[0])}°F`},
     {l:'Humidity',v:`${cur.relative_humidity_2m}%`},
     {l:'Wind',v:`${Math.round(cur.wind_speed_10m)} mph ${windDir(cur.wind_direction_10m)}`},
     {l:'Pressure',v:`${(cur.surface_pressure*0.02953).toFixed(2)} inHg`},
@@ -4040,6 +4114,17 @@ const rWave=document.getElementById('r-wave');
 const rVol=document.getElementById('r-vol');
 aud.volume=0.6;
 rVol.addEventListener('input',()=>{aud.volume=rVol.value});
+
+/* ── RADIO BAR EXPAND/COLLAPSE (mobile) ── */
+function toggleRadioExpanded(){
+  const bar = document.getElementById('radio-bar');
+  const expanded = bar.classList.toggle('r-expanded');
+  localStorage.setItem('nyclive:radioExpanded', expanded ? '1' : '0');
+}
+(function(){
+  const bar = document.getElementById('radio-bar');
+  if (localStorage.getItem('nyclive:radioExpanded') === '1') bar.classList.add('r-expanded');
+})();
 
 function stationUrls(idx){
   const st = STATIONS[idx] || {};
@@ -4765,7 +4850,7 @@ async function loadSubwayStatus() {
     const res = await fetch('/api/subway');
     if (!res.ok) throw new Error('fetch_failed');
     const data = await res.json();
-    const routes = (data && data.routes) ? data.routes : [];
+    const routes = Object.values((data && data.routes) ? data.routes : {});
     const byId = {};
     routes.forEach(function(r){ if (r && r.id) byId[r.id] = r; });
 
@@ -4885,8 +4970,8 @@ function syncTodayWeather() {
       var v = vals[idx] ? vals[idx].textContent : '--';
       if (txt.includes('wind')) wind = v;
       if (txt.includes('humid')) humidity = v;
-      if (txt.includes('high')) hi = v;
-      if (txt.includes('low')) lo = v;
+      if (txt.includes('high')) hi = v.replace(/[^0-9.\-]/g, '');
+      if (txt.includes('low')) lo = v.replace(/[^0-9.\-]/g, '');
     });
     var wv = document.getElementById('today-wind-value'); if(wv) wv.textContent = wind;
     var hs = document.getElementById('today-humidity-sub'); if(hs) hs.textContent = 'Humidity: ' + humidity;
