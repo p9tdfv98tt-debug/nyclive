@@ -32,7 +32,7 @@ A high-performance, real-time live dashboard for New York City residents, commut
 
 1. **Clone the repository**:
    ```bash
-   git clone https://github.com/skylux6-cell/nyclive.git
+   git clone https://github.com/p9tdfv98tt-debug/nyclive.git
    cd nyclive
    ```
 
@@ -51,13 +51,28 @@ A high-performance, real-time live dashboard for New York City residents, commut
 
 ## 🎨 Design System
 
-NYC Live utilizes the **Civic Park Design System**, combining the authoritative structure of official municipal portals (`nyc.gov`) with the warm, organic aesthetic of Central Park:
-- Primary Color: **NYC Blue** (`#0039A6`)
-- Secondary Color: **Park Green** (`#1A472A`)
-- Surface Base: Warm Neutral (`#F7F7F5`) / Pure White (`#FFFFFF`)
+NYC Live uses a **MetroCard-inspired design system**, defined as CSS variables at the top of `index.html`:
+- Surface: warm card stock (`#C7C5BA` / `#E8E6DC`)
+- Accent: signal orange (`#C1440E`)
+- Secondary: transit blue (`#1F5FA8`) and green (`#2F7D46`)
+- Type: Archivo Black for headings, IBM Plex Sans Condensed for body text
+
+Earlier design explorations are in `DESIGN_CONCEPTS.md` and `design-specs.json`.
+
+---
+
+## 📁 Project Structure
+
+```
+index.html          the whole frontend (HTML, CSS, JS)
+functions/api/      Cloudflare Pages Functions: cameras, geo, stocks, subway
+assets/             icon and soundtrack
+_headers            Cloudflare response headers
+wrangler.toml       Pages project config (D1 database binding)
+```
 
 ---
 
 ## 📄 License
 
-This project is open-source under the [MIT License](LICENSE).
+All rights reserved. No license has been granted yet.
