@@ -3,7 +3,6 @@
 A high-performance, real-time live dashboard for New York City residents, commuters, and tourists. NYC Live aggregates live city cameras, MTA subway statuses, real-time weather forecasts, alternate side parking alerts, news headlines, and quick municipal services into a unified, accessible interface.
 
 
-
 ---
 
 ## ✨ Features
